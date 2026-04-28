@@ -1,0 +1,91 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { Play, Shield } from "lucide-react";
+import Image from "next/image";
+
+export default function VideoSection() {
+  return (
+    <section className="py-24 bg-ims-blue relative overflow-hidden">
+      {/* Background elements */}
+      <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
+        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] animate-pulse" />
+      </div>
+
+      <div className="container-xl relative z-10">
+        <div className="flex flex-col lg:grid lg:grid-cols-2 gap-20 items-center">
+          
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            className="order-2 lg:order-1"
+          >
+            <span className="text-xs font-bold uppercase tracking-[0.5em] text-ims-gold mb-6 block">Corporate Excellence</span>
+            <h2 className="text-4xl md:text-6xl font-serif text-white mb-8 leading-tight">
+              A Legacy of <br />
+              <span className="text-ims-red italic">Trust & Impact</span>
+            </h2>
+            <p className="text-lg text-white/70 mb-12 leading-relaxed font-medium">
+              Experience the scale and commitment of IMS Group through our corporate vision. 
+              From precision healthcare to massive infrastructure, see how we are building 
+              the future of Lucknow and beyond.
+            </p>
+            
+            <div className="flex flex-wrap gap-12">
+               <div className="flex items-center gap-4">
+                  <div className="h-12 w-12 rounded-full bg-ims-red/20 flex items-center justify-center text-ims-red">
+                     <Shield size={24} />
+                  </div>
+                  <div>
+                     <p className="text-white font-bold text-sm">Certified Quality</p>
+                     <p className="text-white/40 text-[10px] uppercase tracking-widest">ISO 9001:2015</p>
+                  </div>
+               </div>
+               <div className="flex items-center gap-4">
+                  <div className="h-12 w-12 rounded-full bg-ims-gold/20 flex items-center justify-center text-ims-gold">
+                     <Play size={24} fill="currentColor" />
+                  </div>
+                  <div>
+                     <p className="text-white font-bold text-sm">Corporate Vision</p>
+                     <p className="text-white/40 text-[10px] uppercase tracking-widest">Brand Film 2024</p>
+                  </div>
+               </div>
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            className="relative order-1 lg:order-2 group cursor-pointer will-change-transform"
+          >
+            <div className="aspect-video bg-ims-cream/5 rounded-sm overflow-hidden premium-border relative">
+              <Image 
+                src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop" 
+                alt="Corporate Video Thumbnail" 
+                fill
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="object-cover opacity-60 group-hover:scale-110 transition-transform duration-1000"
+              />
+              <div className="absolute inset-0 flex items-center justify-center">
+                 <div className="h-24 w-24 rounded-full bg-ims-red flex items-center justify-center text-white shadow-2xl group-hover:scale-110 transition-transform">
+                    <Play size={32} fill="currentColor" />
+                 </div>
+              </div>
+              
+              {/* Scanning Effect */}
+              <motion.div 
+                animate={{ y: ["0%", "100%", "0%"] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+                className="absolute top-0 left-0 w-full h-px bg-ims-gold/50 shadow-[0_0_15px_rgba(197,160,89,0.5)] z-20"
+              />
+            </div>
+            
+            {/* Decorative Dots */}
+            <div className="absolute -top-4 -right-4 h-24 w-24 bg-[radial-gradient(#C5A059_1px,transparent_1px)] bg-[size:10px_10px] opacity-30" />
+          </motion.div>
+
+        </div>
+      </div>
+    </section>
+  );
+}
