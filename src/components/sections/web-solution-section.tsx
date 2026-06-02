@@ -43,7 +43,7 @@ export default function WebSolutionSection() {
   const starOpacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
 
   return (
-    <section ref={containerRef} className="mt-0 pt-24 pb-24 bg-[#020617] relative overflow-hidden">
+    <section id="web-solution" ref={containerRef} className="mt-0 pt-24 pb-24 bg-[#020617] relative overflow-hidden">
       {/* Starry Night Effect with Scroll Parallax */}
       <motion.div 
         style={{ y: starY, opacity: starOpacity }}

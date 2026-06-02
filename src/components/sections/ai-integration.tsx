@@ -27,7 +27,7 @@ const features = [
 export default function AIIntegration() {
   return (
     <section className="relative overflow-hidden">
-      <div className="grid gap-20 lg:grid-cols-2 lg:items-center">
+      <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
         <div>
           <motion.span 
             initial={{ opacity: 0 }}

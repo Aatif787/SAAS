@@ -3,8 +3,8 @@ import { Outfit, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
 import { Toaster } from "sonner";
-import CursorParticles from "@/components/ui/cursor-particles";
 import Navbar from "@/components/ui/navbar";
+import CursorParticlesWrapper from "@/components/ui/cursor-particles-wrapper";
 
 const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit" });
 const spaceGrotesk = Space_Grotesk({ subsets: ["latin"], variable: "--font-space" });
@@ -22,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${outfit.variable} ${spaceGrotesk.variable} font-sans antialiased`}>
-        <CursorParticles />
+        <CursorParticlesWrapper />
         <Navbar />
 
         {children}
@@ -45,16 +45,6 @@ export default function RootLayout({
                        <li className="hover:text-white transition-colors cursor-pointer">IMS One Home Solution</li>
                        <li className="hover:text-white transition-colors cursor-pointer">IMS Steel & Infra</li>
                        <li className="hover:text-white transition-colors cursor-pointer">Estate Empire</li>
-                       <li className="hover:text-white transition-colors cursor-pointer">IMS Web Solution</li>
-                    </ul>
-                 </div>
-                 <div>
-                    <h4 className="font-sans font-bold uppercase tracking-[0.2em] text-xs text-ims-gold mb-8">Web Services</h4>
-                    <ul className="space-y-4 text-sm font-medium text-white/60">
-                       <li className="hover:text-white transition-colors cursor-pointer">Web Development</li>
-                       <li className="hover:text-white transition-colors cursor-pointer">Web Applications</li>
-                       <li className="hover:text-white transition-colors cursor-pointer">AI & Automation</li>
-                       <li className="hover:text-white transition-colors cursor-pointer">Growth Marketing</li>
                     </ul>
                  </div>
                  <div>

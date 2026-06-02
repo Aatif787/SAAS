@@ -145,7 +145,7 @@ export default function DashboardPage() {
                        Adding contextual AI chatbots to your landing pages can increase 
                        lead generation by up to 35%. Check out our AI packs in the services page.
                     </p>
-                    <Link href="/services#ai" className="mt-8 inline-block text-lime font-bold hover:underline">Explore AI Solutions</Link>
+                    <Link href="/#ai" className="mt-8 inline-block text-lime font-bold hover:underline">Explore AI Solutions</Link>
                  </div>
 
                  <div className="glass rounded-3xl p-8 border-orange/20">

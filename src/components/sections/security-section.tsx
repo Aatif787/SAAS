@@ -30,13 +30,13 @@ export default function SecuritySection() {
   return (
     <section className="section-pad bg-white">
       <div className="container-xl">
-        <div className="premium-border p-12 md:p-24 relative overflow-hidden bg-ims-cream/50">
+        <div className="premium-border p-6 sm:p-12 md:p-24 relative overflow-hidden bg-ims-cream/50">
           {/* Background Decorative Element */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-[0.03] pointer-events-none">
              <Shield size={600} className="text-ims-blue" />
           </div>
           
-          <div className="relative z-10 grid gap-20 lg:grid-cols-2 items-center">
+          <div className="relative z-10 grid gap-10 lg:grid-cols-2 items-center">
             <div>
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -48,13 +48,13 @@ export default function SecuritySection() {
                   Built on a Foundation of <span className="text-ims-red">Trust.</span>
                 </h2>
                 <p className="mt-8 text-lg text-ims-charcoal/70 leading-relaxed max-w-xl font-medium">
-                  At IMS Group, security is not just a feature—it's a commitment. 
+                  At IMS Group, security is not just a feature—it&apos;s a commitment. 
                   We implement multi-layered safety and data protection protocols 
                   across all our business verticals to ensure absolute peace of mind.
                 </p>
               </motion.div>
               
-              <div className="mt-16 grid gap-10 sm:grid-cols-2">
+              <div className="mt-10 sm:mt-16 grid gap-10 sm:grid-cols-2">
                 {securityFeatures.map((f, i) => (
                   <motion.div
                     key={f.title}

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { toast } from "sonner";
 
-export default function ResetPasswordPage() {
+function ResetPasswordForm() {
   const [loading, setLoading] = useState(false);
   const params = useSearchParams();
   const router = useRouter();
@@ -31,6 +31,18 @@ export default function ResetPasswordPage() {
   }
 
   return (
-    <main className="section-pad"><div className="container-xl max-w-lg"><h1 className="mb-6 text-3xl font-bold">Reset Password</h1><form action={onSubmit} className="glass space-y-4 rounded-2xl p-6"><input name="password" type="password" required placeholder="New Password" className="w-full rounded-lg border border-white/20 bg-transparent px-4 py-3" /><button disabled={loading} className="rounded-full bg-lime px-5 py-3 font-semibold text-black">{loading ? "Saving..." : "Update Password"}</button></form></div></main>
+    <div className="container-xl max-w-lg"><h1 className="mb-6 text-3xl font-bold">Reset Password</h1><form action={onSubmit} className="glass space-y-4 rounded-2xl p-6"><input name="password" type="password" required placeholder="New Password" className="w-full rounded-lg border border-white/20 bg-transparent px-4 py-3" /><button disabled={loading} className="rounded-full bg-lime px-5 py-3 font-semibold text-black">{loading ? "Saving..." : "Update Password"}</button></form></div>
+  );
+}
+
+import { Suspense } from "react";
+
+export default function ResetPasswordPage() {
+  return (
+    <main className="section-pad">
+      <Suspense fallback={<div>Loading...</div>}>
+        <ResetPasswordForm />
+      </Suspense>
+    </main>
   );
 }

@@ -1,11 +1,9 @@
-import Hero from "@/components/sections/hero";
+import ExtraordinaryHero from "@/components/sections/extraordinary-hero";
 import ServicesGrid from "@/components/sections/services-grid";
-import WebSolutionSection from "@/components/sections/web-solution-section";
 import AboutIMS from "@/components/sections/about-ims";
 import Stats from "@/components/sections/stats";
 import VideoSection from "@/components/sections/video-section";
 import AIIntegration from "@/components/sections/ai-integration";
-import PricingSection from "@/components/sections/pricing-section";
 import TechStack from "@/components/sections/tech-stack";
 import SecuritySection from "@/components/sections/security-section";
 import FAQ from "@/components/sections/faq";
@@ -17,28 +15,20 @@ import ScrollScale from "@/components/ui/scroll-scale";
 export default function HomePage() {
   return (
     <main className="relative bg-ims-cream">
-      <Hero />
+      <ExtraordinaryHero />
       
       <ScrollScale>
         <Stats />
       </ScrollScale>
-
+ 
       <ScrollScale>
         <VideoSection />
       </ScrollScale>
-
+ 
       <ScrollScale>
         <ServicesGrid />
       </ScrollScale>
-
-      <ScrollScale>
-        <WebSolutionSection />
-      </ScrollScale>
-
-      <ScrollScale>
-        <PricingSection />
-      </ScrollScale>
-
+ 
       <ScrollScale>
         <AboutIMS />
       </ScrollScale>

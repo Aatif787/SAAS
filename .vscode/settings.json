@@ -1,1 +1,15 @@
-{}
+{
+  "npm.packageManager": "npm",
+  "cSpell.words": [
+    "bokeh",
+    "clearcoat",
+    "drei",
+    "eskil",
+    "jointcommissioninternational",
+    "lerp",
+    "metalness",
+    "photoreal",
+    "sightlines",
+    "upvc"
+  ]
+}

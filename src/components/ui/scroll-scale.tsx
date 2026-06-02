@@ -1,7 +1,7 @@
 "use client";
 
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
-import { ReactNode, useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { ReactNode, useRef, useState, useEffect } from "react";
 
 export default function ScrollScale({ children }: { children: ReactNode }) {
   const containerRef = useRef(null);
@@ -10,24 +10,34 @@ export default function ScrollScale({ children }: { children: ReactNode }) {
     offset: ["start end", "end start"]
   });
 
-  // More conservative transformations to ensure visibility
-  const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.95, 1, 0.95]);
-  const opacity = useTransform(scrollYProgress, [0, 0.1, 0.9, 1], [0.3, 1, 1, 0.3]);
-  const rotateX = useTransform(scrollYProgress, [0, 1], [5, -5]);
+  const [isMobile, setIsMobile] = useState(false);
 
-  const springScale = useSpring(scale, { stiffness: 100, damping: 30 });
-  const springOpacity = useSpring(opacity, { stiffness: 100, damping: 30 });
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    let resizeTimer: ReturnType<typeof setTimeout>;
+    const debouncedResize = () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(checkMobile, 150);
+    };
+    window.addEventListener("resize", debouncedResize, { passive: true });
+    return () => {
+      window.removeEventListener("resize", debouncedResize);
+      clearTimeout(resizeTimer);
+    };
+  }, []);
+
+  // Lightweight transforms — no spring physics, no 3D perspective
+  const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.97, 1, 0.97]);
+  const opacity = useTransform(scrollYProgress, [0, 0.15, 0.85, 1], [0.4, 1, 1, 0.4]);
 
   return (
     <motion.div
       ref={containerRef}
-      style={{
-        scale: springScale,
-        opacity: springOpacity,
-        rotateX: rotateX,
-        perspective: "1000px"
+      style={isMobile ? {} : {
+        scale,
+        opacity,
       }}
-      className="will-change-transform"
     >
       {children}
     </motion.div>

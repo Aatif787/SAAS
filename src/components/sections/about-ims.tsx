@@ -6,13 +6,14 @@ import Image from "next/image";
 
 export default function AboutIMS() {
   return (
-    <section className="section-pad bg-white">
+    <section id="about" className="section-pad bg-white">
       <div className="container-xl">
-        <div className="grid lg:grid-cols-2 gap-20 items-center">
+        <div className="grid lg:grid-cols-2 gap-10 lg:gap-20 items-center">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
-            className="relative will-change-transform"
+            viewport={{ once: true }}
+            className="relative"
           >
             <div className="aspect-[4/3] rounded-sm overflow-hidden premium-border shadow-2xl relative">
               <Image 
@@ -33,6 +34,7 @@ export default function AboutIMS() {
             <motion.span 
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
               className="text-xs font-bold uppercase tracking-[0.5em] text-ims-gold mb-6 block"
             >
               Institutional Legacy
@@ -40,14 +42,16 @@ export default function AboutIMS() {
             <motion.h2 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              className="text-4xl md:text-6xl font-serif text-ims-blue mb-8 leading-[1.1] tracking-tighter"
+              viewport={{ once: true }}
+              className="text-3xl md:text-6xl font-serif text-ims-blue mb-8 leading-[1.1] tracking-tighter"
             >
-              Pioneering the <br />
+              Pioneering the <br className="hidden md:inline" />
               <span className="text-ims-red italic">Infinite</span> Horizon
             </motion.h2>
             <motion.p 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
               className="text-lg text-ims-charcoal/80 leading-relaxed mb-10 font-medium"
             >
               Since 1995, IMS Group has evolved into a diversified technological force. 
@@ -66,6 +70,7 @@ export default function AboutIMS() {
                   key={item.title}
                   initial={{ opacity: 0, y: 10 }}
                   whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
                   transition={{ delay: i * 0.1 }}
                   className="flex gap-4"
                 >

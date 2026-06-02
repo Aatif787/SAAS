@@ -8,7 +8,7 @@ export default function AboutPage() {
     <main className="bg-mesh min-h-screen pt-20">
       <section className="section-pad">
         <div className="container-xl">
-           <div className="grid gap-16 lg:grid-cols-2 lg:items-center">
+           <div className="grid gap-8 lg:gap-16 lg:grid-cols-2 lg:items-center">
               <motion.div 
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -19,9 +19,9 @@ export default function AboutPage() {
                     <span className="text-gradient-lime">Pure Excellence.</span>
                  </h1>
                  <p className="mt-8 text-xl text-white/60 leading-relaxed">
-                    InfinityMesh was founded on the principle that digital experiences 
-                    should be as immersive as they are functional. We are a boutique 
-                    agency of dreamers, builders, and growth hackers.
+                    IMS Group was founded on the principle that infrastructure and healthcare 
+                    should be as robust as they are essential. We are a conglomerate 
+                    of visionaries, builders, and leaders.
                  </p>
                  <div className="mt-12 grid grid-cols-2 gap-8">
                     <div>
@@ -40,11 +40,11 @@ export default function AboutPage() {
                 animate={{ opacity: 1, scale: 1 }}
                 className="relative"
               >
-                 <div className="glass aspect-square w-full rounded-[4rem] p-12 overflow-hidden border-white/5 relative">
+                 <div className="glass aspect-square w-full rounded-[2rem] sm:rounded-[4rem] p-6 sm:p-12 overflow-hidden border-white/5 relative">
                     <img 
                       src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=2400" 
                       alt="Team Collaborating"
-                      className="h-full w-full object-cover rounded-[3rem] opacity-60 grayscale hover:grayscale-0 transition-all duration-700"
+                      className="h-full w-full object-cover rounded-[1.5rem] sm:rounded-[3rem] opacity-60 grayscale hover:grayscale-0 transition-all duration-700"
                     />
                     <div className="absolute inset-0 bg-gradient-to-tr from-lime/20 to-transparent" />
                  </div>
@@ -57,9 +57,9 @@ export default function AboutPage() {
       <section className="section-pad bg-black/40 border-y border-white/5">
          <div className="container-xl">
             <h2 className="text-3xl font-bold text-center mb-16">What Drives Us</h2>
-            <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="grid gap-6 sm:gap-12 sm:grid-cols-2 lg:grid-cols-4">
                {[
-                 { label: "Innovation", icon: Rocket, desc: "Constantly pushing the boundaries of web technology." },
+                 { label: "Innovation", icon: Rocket, desc: "Constantly pushing the boundaries of healthcare and infrastructure." },
                  { label: "Integrity", icon: Target, desc: "Transparent processes and honest communication." },
                  { label: "Excellence", icon: Award, desc: "Never settling for 'good enough'. We aim for perfection." },
                  { label: "Community", icon: Users, desc: "Building lasting partnerships with our global clients." }

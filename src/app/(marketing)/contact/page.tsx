@@ -2,8 +2,8 @@ import ContactLeadForm from "@/components/forms/contact-lead-form";
 
 export default function ContactPage() {
   return (
-    <main className="section-pad">
-      <div className="container-xl grid gap-8 lg:grid-cols-2">
+    <main className="bg-[#121214] text-white min-h-screen pt-28 pb-16">
+      <div className="container-xl grid gap-8 lg:gap-16 lg:grid-cols-2">
         <div>
           <h1 className="text-4xl font-bold">Contact Us</h1>
           <p className="mt-3 text-white/75">Gomti Nagar, Lucknow, Uttar Pradesh, India</p>

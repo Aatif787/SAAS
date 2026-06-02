@@ -13,7 +13,7 @@ export default function VideoSection() {
       </div>
 
       <div className="container-xl relative z-10">
-        <div className="flex flex-col lg:grid lg:grid-cols-2 gap-20 items-center">
+        <div className="flex flex-col lg:grid lg:grid-cols-2 gap-10 lg:gap-20 items-center">
           
           <motion.div
             initial={{ opacity: 0, x: -50 }}
@@ -22,7 +22,7 @@ export default function VideoSection() {
           >
             <span className="text-xs font-bold uppercase tracking-[0.5em] text-ims-gold mb-6 block">Corporate Excellence</span>
             <h2 className="text-4xl md:text-6xl font-serif text-white mb-8 leading-tight">
-              A Legacy of <br />
+              A Legacy of <br className="hidden md:inline" />
               <span className="text-ims-red italic">Trust & Impact</span>
             </h2>
             <p className="text-lg text-white/70 mb-12 leading-relaxed font-medium">

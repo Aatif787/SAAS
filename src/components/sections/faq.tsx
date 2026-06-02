@@ -5,12 +5,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Plus, Minus, MessageSquare } from "lucide-react";
 
 const faqs = [
-  { question: "What businesses does IMS Group operate?", answer: "IMS Group is a diversified conglomerate with interests in Healthcare, Infrastructure, Home Solutions (Sanitary, Tiles, Steel), and Digital Web Solutions." },
+  { question: "What businesses does IMS Group operate?", answer: "IMS Group is a diversified conglomerate with interests in Healthcare, Infrastructure, and Home Solutions (Sanitary, Tiles, Steel)." },
   { question: "Where is IMS Group located?", answer: "Our corporate headquarters is located in Gomti Nagar, Lucknow, but we serve clients and projects across the region and beyond." },
   { question: "How long has IMS Group been established?", answer: "With over 10 years of excellence, we have built a legacy of trust and quality across multiple industries." },
-  { question: "Does IMS offer web development services?", answer: "Yes, IMS Web Solution is our specialized digital arm providing premium web development, AI integration, and SaaS platforms." },
-  { question: "How can I get a quote for my project?", answer: "You can use the 'Get Quote' button on our website, contact us via WhatsApp, or call our direct line at 9699858212." },
-  { question: "Do you handle international projects?", answer: "Yes, our Web Solution and Real Estate consultancy divisions work with clients globally." }
+  { question: "How can I get a quote for my project?", answer: "You can use the 'Get Quote' button on our website, contact us via WhatsApp, or call our direct line at +91 9699858212." },
+  { question: "Do you handle international projects?", answer: "Yes, our Real Estate consultancy divisions work with clients globally." }
 ];
 
 function FAQItem({ question, answer }: { question: string; answer: string }) {
@@ -73,7 +72,7 @@ export default function FAQ() {
               Our team is always here for further assistance.
             </p>
             <div className="mt-12">
-               <div className="premium-border p-10 bg-white shadow-xl relative overflow-hidden">
+               <div className="premium-border p-6 sm:p-10 bg-white shadow-xl relative overflow-hidden">
                   <div className="absolute top-0 right-0 p-4 opacity-10">
                      <MessageSquare size={100} className="text-ims-blue" />
                   </div>
@@ -84,7 +83,7 @@ export default function FAQ() {
             </div>
           </div>
           
-          <div className="bg-white premium-border p-10 md:p-16 shadow-2xl">
+          <div className="bg-white premium-border p-6 sm:p-10 md:p-16 shadow-2xl">
             {faqs.map((faq) => (
               <FAQItem key={faq.question} {...faq} />
             ))}

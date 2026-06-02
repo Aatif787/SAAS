@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
-const PARTICLE_COUNT = 25;
+const PARTICLE_COUNT = 12;
 const COLORS = ["#D32F2F", "#C5A059", "#FFFFFF", "#C5A059"];
 
 interface Particle {
@@ -20,8 +20,22 @@ export default function CursorParticles() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const mousePos = useRef({ x: 0, y: 0 });
   const particles = useRef<Particle[]>([]);
+  const rafRef = useRef<number>(0);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    // Skip on mobile/touch devices
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768 || "ontouchstart" in window);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile, { passive: true });
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  useEffect(() => {
+    if (isMobile) return;
+
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
@@ -69,32 +83,39 @@ export default function CursorParticles() {
         }
 
         ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        const size = p.size * 2.5;
+        ctx.moveTo(p.x, p.y - size);
+        ctx.quadraticCurveTo(p.x, p.y, p.x + size, p.y);
+        ctx.quadraticCurveTo(p.x, p.y, p.x, p.y + size);
+        ctx.quadraticCurveTo(p.x, p.y, p.x - size, p.y);
+        ctx.quadraticCurveTo(p.x, p.y, p.x, p.y - size);
+        ctx.closePath();
         ctx.fillStyle = p.color;
         ctx.globalAlpha = p.alpha;
-        ctx.shadowBlur = 10;
-        ctx.shadowColor = p.color;
         ctx.fill();
       }
 
-      requestAnimationFrame(animate);
+      rafRef.current = requestAnimationFrame(animate);
     };
 
-    window.addEventListener("resize", resize);
-    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("resize", resize, { passive: true });
+    window.addEventListener("mousemove", handleMouseMove, { passive: true });
     resize();
-    animate();
+    rafRef.current = requestAnimationFrame(animate);
 
     return () => {
       window.removeEventListener("resize", resize);
       window.removeEventListener("mousemove", handleMouseMove);
+      cancelAnimationFrame(rafRef.current);
     };
-  }, []);
+  }, [isMobile]);
+
+  if (isMobile) return null;
 
   return (
     <canvas
       ref={canvasRef}
-      className="pointer-events-none fixed inset-0 z-[999] will-change-transform"
+      className="pointer-events-none fixed inset-0 z-[999]"
       style={{ mixBlendMode: "screen" }}
     />
   );

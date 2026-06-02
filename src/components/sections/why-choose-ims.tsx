@@ -65,7 +65,7 @@ export default function WhyChooseIMS() {
             Why Choose <span className="text-ims-red italic">IMS Group?</span>
           </motion.h2>
           <p className="max-w-2xl text-lg text-ims-charcoal/70 font-medium">
-            Discover the pillars of excellence that make us a trusted leader in India's industrial and digital landscape.
+            Discover the pillars of excellence that make us a trusted leader in India&apos;s industrial and digital landscape.
           </p>
           <div className="gold-accent mx-auto mt-8" />
         </div>
@@ -79,7 +79,7 @@ export default function WhyChooseIMS() {
               viewport={{ once: true }}
               transition={{ delay: index * 0.1, duration: 0.6 }}
               whileHover={{ y: -10 }}
-              className="group p-10 bg-ims-cream/30 border border-ims-blue/5 rounded-sm hover:bg-white hover:shadow-2xl transition-all duration-500 relative overflow-hidden will-change-transform"
+              className="group p-6 sm:p-10 bg-ims-cream/30 border border-ims-blue/5 rounded-sm hover:bg-white hover:shadow-2xl transition-all duration-500 relative overflow-hidden will-change-transform"
             >
               {/* Corner Accent */}
               <div className={`absolute top-0 right-0 w-12 h-12 ${reason.color} opacity-0 group-hover:opacity-10 transition-opacity -mr-6 -mt-6 rounded-full blur-xl`} />

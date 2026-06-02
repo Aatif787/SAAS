@@ -140,8 +140,7 @@ export default function ServicesPage() {
                      Join 200+ successful brands that trust InfinityMesh for their digital transformation.
                   </p>
                   <div className="mt-12 flex flex-wrap justify-center gap-6">
-                     <Link href="/pricing" className="rounded-full bg-white px-8 py-4 font-bold text-black transition-transform hover:scale-105">View Pricing</Link>
-                     <Link href="/contact" className="rounded-full border border-white/10 bg-white/5 px-8 py-4 font-bold transition-all hover:bg-white/10">Book a Free Consultation</Link>
+                     <Link href="/contact" className="rounded-full bg-white px-8 py-4 font-bold text-black transition-transform hover:scale-105">Book a Free Consultation</Link>
                   </div>
                </div>
             </div>

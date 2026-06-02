@@ -1,194 +1,190 @@
 "use client";
 
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useRef, useMemo, Suspense } from "react";
+import { Canvas, useFrame, useLoader } from "@react-three/fiber";
+import * as THREE from "three";
+import { 
+  Float, 
+  Decal,
+  Environment, 
+  PerspectiveCamera,
+  ContactShadows
+} from "@react-three/drei";
 
 const techs = [
   "Next.js", "React", "TypeScript", "Node.js", "MongoDB", "Prisma", 
-  "Tailwind CSS", "Framer Motion", "Three.js", "OpenAI", "Stripe", "Clerk"
+  "Tailwind", "Motion", "Three.js", "OpenAI", "Stripe", "Clerk",
+  "Next.js", "React", "TypeScript", "Node.js", "MongoDB", "Prisma" 
 ];
 
-const STYLES = `
-  .stone-track {
-    display: flex;
-    align-items: center;
-    gap: 100px;
-    width: max-content;
-    animation: stone-slide 70s linear infinite;
-    padding: 60px 0;
-    will-change: transform;
-  }
+function FloatingStone({
+  name,
+  position,
+  color = "#FF3131",
+  scale = 1,
+}: {
+  name: string;
+  position: [number, number, number];
+  color?: string;
+  scale?: number;
+}) {
+  const meshRef = useRef<THREE.Mesh>(null);
+  const texture = useLoader(THREE.TextureLoader, "/images/engineered-stone.png");
+  
+  // Physics refs for gravity jump
+  const velocity = useRef(0);
+  const yOffset = useRef(0);
+  const isJumping = useRef(false);
 
-  @keyframes stone-slide {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
-  }
+  const textTexture = useMemo(() => {
+    const canvas = document.createElement("canvas");
+    canvas.width = 1024;
+    canvas.height = 512;
+    const ctx = canvas.getContext("2d");
+    if (ctx) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.font = "bold 150px serif";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillStyle = color;
+      ctx.fillText(name.toUpperCase(), canvas.width / 2, canvas.height / 2);
+      ctx.strokeStyle = "rgba(0,0,0,0.3)";
+      ctx.lineWidth = 2;
+      ctx.strokeText(name.toUpperCase(), canvas.width / 2, canvas.height / 2);
+    }
+    const tex = new THREE.CanvasTexture(canvas);
+    tex.anisotropy = 16;
+    return tex;
+  }, [name, color]);
 
-  .stone-wrapper {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    cursor: pointer;
-    perspective: 800px;
-  }
+  const geometry = useMemo(() => new THREE.IcosahedronGeometry(1.2, 8), []);
 
-  .stone {
-    width: 200px;
-    height: 110px;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.7s cubic-bezier(0.19, 1, 0.22, 1);
-    
-    /* Hyper-Realistic River Stone: Deep Volumetric Texturing */
-    background-color: #3d4043;
-    background-image: 
-      /* Micro-Texture Detail */
-      url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.2'/%3E%3C/svg%3E"),
-      /* Top Specular Rim Light */
-      radial-gradient(ellipse at 40% 15%, rgba(255,255,255,0.1) 0%, transparent 40%),
-      /* Core Volumetric Light */
-      radial-gradient(ellipse at center, #55585b 0%, #212325 100%);
-    
-    background-blend-mode: overlay, normal, normal;
-    border-radius: 46% 54% 49% 51% / 40% 48% 52% 60%;
-    
-    /* Complex Multi-Stage Shadowing for Depth */
-    box-shadow: 
-      inset -12px -12px 25px rgba(0,0,0,0.6),
-      inset 8px 8px 15px rgba(255,255,255,0.03),
-      inset 0 2px 4px rgba(255,255,255,0.05),
-      0 20px 40px -10px rgba(0,0,0,0.4),
-      0 10px 15px rgba(0,0,0,0.15);
-  }
+  useFrame((state, delta) => {
+    if (meshRef.current) {
+      // Steady rotation
+      meshRef.current.rotation.y += 0.01;
 
-  /* Secondary Layer: Natural Imperfections, Veining & Surface Wear */
-  .stone::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    background-image: 
-      /* Crisp White Veins */
-      repeating-linear-gradient(145deg, transparent 0, transparent 40px, rgba(255,255,255,0.06) 41px, transparent 41.5px),
-      repeating-linear-gradient(215deg, transparent 0, transparent 80px, rgba(255,255,255,0.04) 81px, transparent 81.5px),
-      /* Surface Wear Spots */
-      radial-gradient(circle at 75% 25%, rgba(255,255,255,0.05) 0%, transparent 20%),
-      radial-gradient(circle at 20% 70%, rgba(255,255,255,0.03) 0%, transparent 15%);
-    pointer-events: none;
-    mix-blend-mode: overlay;
-    opacity: 0.8;
-  }
+      // Gravity Physics Logic
+      if (isJumping.current || yOffset.current > 0) {
+        velocity.current -= 30 * delta; // Increased Gravity force
+        yOffset.current += velocity.current * delta;
 
-  .tech-label {
-    font-family: 'Playfair Display', serif;
-    font-weight: 800;
-    font-size: 0.95rem;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: rgba(0, 0, 0, 0.45);
-    
-    /* Carved/Engraved Detail */
-    text-shadow: 
-      -0.5px -0.5px 0.5px rgba(0,0,0,0.5), 
-      0.5px 0.5px 0.5px rgba(255,255,255,0.1);
-    
-    transition: all 0.6s ease;
-    z-index: 10;
-  }
+        if (yOffset.current <= 0) {
+          yOffset.current = 0;
+          velocity.current = 0;
+          isJumping.current = false;
+        }
+      }
+      
+      meshRef.current.position.y = yOffset.current;
+    }
+  });
 
-  .stone-shadow {
-    width: 150px;
-    height: 25px;
-    background: radial-gradient(ellipse, rgba(0,0,0,0.45) 0%, transparent 80%);
-    filter: blur(12px);
-    position: absolute;
-    bottom: -15px;
-    z-index: -1;
-    transition: all 0.7s ease;
-    opacity: 0.8;
-  }
-
-  /* Interaction: Hyper-Reflective Glow */
-  .stone-wrapper:hover .stone {
-    transform: scale(1.1) translateY(-12px) rotateX(8deg) rotateY(2deg);
-    filter: brightness(1.15) contrast(1.05);
-    box-shadow: 
-      inset -15px -15px 35px rgba(0,0,0,0.4),
-      inset 12px 12px 30px rgba(255,255,255,0.08),
-      0 45px 70px -15px rgba(0,0,0,0.5);
-  }
-
-  .stone-wrapper:hover .tech-label {
-    color: rgba(255, 255, 255, 0.7);
-    text-shadow: 0 0 12px rgba(255,255,255,0.2);
-    transform: scale(1.02);
-  }
-
-  .stone-wrapper:hover .stone-shadow {
-    transform: scaleX(1.3) scaleY(0.4) translateY(12px);
-    opacity: 0.3;
-    filter: blur(15px);
-  }
-`;
-
-export default function TechStack() {
-  const [mounted, setMounted] = React.useState(false);
-
-  React.useEffect(() => {
-    setMounted(true);
-  }, []);
+  const handlePointerEnter = () => {
+    if (!isJumping.current) {
+      velocity.current = 12; // Increased Initial upward kick
+      isJumping.current = true;
+    }
+  };
 
   return (
-    <section className="py-32 bg-ims-cream border-t border-ims-blue/5 overflow-hidden relative">
-      <style>{STYLES}</style>
-      
-      <div className="text-center mb-16 relative z-10">
-        <motion.span 
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          className="text-[10px] font-bold uppercase tracking-[0.6em] text-ims-gold mb-4 block"
+    <group position={position} scale={scale}>
+      <mesh 
+        ref={meshRef} 
+        geometry={geometry} 
+        castShadow 
+        receiveShadow
+        onPointerEnter={handlePointerEnter}
+      >
+        <meshPhysicalMaterial 
+          map={texture}
+          color="#ffffff"
+          roughness={0.15}
+          metalness={0.05}
+          bumpMap={texture}
+          bumpScale={0.01}
+          clearcoat={1}
+          clearcoatRoughness={0.1}
+        />
+        <Decal
+          position={[0, 0, 1.1]}
+          rotation={[0, 0, 0]}
+          scale={[4.2, 2.4, 2.4]}
         >
+          <meshStandardMaterial
+            map={textTexture}
+            transparent
+            polygonOffset
+            polygonOffsetFactor={-10}
+            roughness={1}
+            metalness={0}
+            emissive={color}
+            emissiveIntensity={0.3}
+          />
+        </Decal>
+      </mesh>
+    </group>
+  );
+}
+
+const techItems = [...techs, ...techs, ...techs]; // Triple for ultra-seamless loop
+
+function MarqueeContent() {
+  const groupRef = useRef<THREE.Group>(null);
+  const count = techItems.length;
+  const spacing = 5;
+  const totalWidth = count * spacing;
+  
+  useFrame((state, delta) => {
+    if (groupRef.current) {
+      groupRef.current.position.x -= delta * 2;
+      // Modulo-like reset for seamlessness
+      if (groupRef.current.position.x < -spacing * techs.length) {
+        groupRef.current.position.x += spacing * techs.length;
+      }
+    }
+  });
+
+  return (
+    <group ref={groupRef}>
+      {techItems.map((tech, i) => (
+        <FloatingStone 
+          key={`${tech}-${i}`} 
+          name={tech} 
+          position={[i * spacing, 0, 0]} 
+          scale={0.6}
+          color={i % 2 === 0 ? "#FF3131" : "#39FF14"}
+        />
+      ))}
+    </group>
+  );
+}
+
+export default function ThreeDTechStack() {
+  return (
+    <section className="h-[300px] md:h-[450px] w-full bg-ims-cream relative overflow-hidden">
+      <div className="absolute top-12 left-0 w-full text-center z-10">
+        <span className="text-[9px] font-bold uppercase tracking-[0.6em] text-ims-gold mb-2 block">
           Foundational Excellence
-        </motion.span>
-        <h2 className="text-3xl md:text-4xl font-serif text-ims-blue">Engineered with Precision</h2>
+        </span>
+        <h2 className="text-2xl md:text-3xl font-serif text-ims-blue">Engineered Precision</h2>
       </div>
 
-      <div className="relative">
-        <div className="stone-track">
-          {[...techs, ...techs].map((tech, i) => {
-            // Stable randomization for client-side only
-            const randomRadius = mounted ? `${44 + Math.random() * 8}% ${50 + Math.random() * 8}% ${48 + Math.random() * 8}% ${52 + Math.random() * 8}% / ${40 + Math.random() * 10}% ${45 + Math.random() * 10}% ${55 + Math.random() * 10}% ${60 + Math.random() * 10}%` : "50%";
-            const randomRotate = mounted ? `${Math.random() * 4 - 2}deg` : "0deg";
-            const randomDuration = mounted ? 5 + Math.random() * 3 : 5;
+      <Canvas shadows dpr={[1, 2]}>
+        <PerspectiveCamera makeDefault position={[0, 0, 10]} fov={35} />
+        <ambientLight intensity={0.7} />
+        <spotLight position={[5, 5, 5]} angle={0.15} penumbra={1} intensity={1.5} castShadow />
+        <pointLight position={[-5, -5, -5]} intensity={0.5} />
+        
+        <Suspense fallback={null}>
+          <MarqueeContent />
+          <Environment preset="city" />
+          <ContactShadows position={[0, -2.5, 0]} opacity={0.3} scale={40} blur={2.5} far={10} />
+        </Suspense>
+      </Canvas>
 
-            return (
-              <div key={`${tech}-${i}`} className="stone-wrapper">
-                <motion.div 
-                  className="stone"
-                  style={{
-                    borderRadius: randomRadius,
-                    transform: `rotate(${randomRotate})`
-                  }}
-                  animate={{
-                    y: [0, -6, 0],
-                    rotate: [0, 0.5, 0]
-                  }}
-                  transition={{
-                    duration: randomDuration,
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                  }}
-                >
-                  <span className="tech-label">{tech}</span>
-                </motion.div>
-                <div className="stone-shadow" />
-              </div>
-            );
-          })}
-        </div>
+      <div className="absolute bottom-6 left-0 w-full text-center z-10 pointer-events-none opacity-30">
+        <p className="text-[8px] font-bold uppercase tracking-[1em]">3D SPATIAL INFRASTRUCTURE • WEBGL ENGINE</p>
       </div>
     </section>
   );

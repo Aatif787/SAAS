@@ -14,8 +14,8 @@ function Counter({ value, suffix }: { value: string; suffix: string }) {
     const end = target;
     if (start === end) return;
 
-    let totalDuration = 2000;
-    let increment = end / (totalDuration / 16);
+    const totalDuration = 2000;
+    const increment = end / (totalDuration / 16);
 
     const timer = setInterval(() => {
       start += increment;
@@ -59,7 +59,7 @@ export default function Stats() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.1 }}
-              className="text-center group p-6 hover:bg-white/5 transition-colors border-r border-white/5 last:border-0"
+              className="text-center group p-6 hover:bg-white/5 transition-colors border-white/5 border-r-0 odd:border-r md:border-r md:last:border-0"
             >
               <div className="flex flex-col items-center">
                  <div className="text-ims-gold mb-4 opacity-50 group-hover:opacity-100 transition-opacity">

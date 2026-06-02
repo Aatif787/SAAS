@@ -18,7 +18,7 @@ export async function connectDB() {
   if (globalForMongoose.mongoose.conn) return globalForMongoose.mongoose.conn;
 
   if (!globalForMongoose.mongoose.promise) {
-    globalForMongoose.mongoose.promise = mongoose.connect(MONGODB_URI, {
+    globalForMongoose.mongoose.promise = mongoose.connect(MONGODB_URI as string, {
       dbName: "premium_agency_saas",
     });
   }
