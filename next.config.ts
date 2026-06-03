@@ -1,3 +1,4 @@
+// Trigger Vercel rebuild with the correct main branch codebase
 import type { NextConfig } from "next";
 import path from "path";
 
