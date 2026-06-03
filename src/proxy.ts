@@ -38,7 +38,7 @@ const protectedRoutes = ["/dashboard", "/admin"];
 // Vite dev server paths that need proxying when referenced from estate pages
 const VITE_PATHS = ["/@vite/", "/@fs/", "/@react-refresh", "/node_modules/.vite/", "/node_modules/", "/src/"];
 // Static asset paths from estate's public directory
-const ESTATE_ASSET_PATHS = ["/images/", "/videos/"];
+const ESTATE_ASSET_PATHS = ["/images/", "/videos/", "/assets/"];
 
 function isEstateReferer(request: NextRequest): boolean {
   const referer = request.headers.get("referer") || "";
@@ -51,10 +51,11 @@ function isEstateReferer(request: NextRequest): boolean {
       refPath.startsWith("/src/") ||
       refPath.startsWith("/@vite/") ||
       refPath.startsWith("/@fs/") ||
-      refPath.startsWith("/@react-refresh")
+      refPath.startsWith("/@react-refresh") ||
+      refPath.startsWith("/assets")
     );
   } catch {
-    return referer.includes("/estate");
+    return referer.includes("/estate") || referer.includes("/assets");
   }
 }
 
@@ -226,6 +227,7 @@ export const config = {
     // Static assets
     "/images/:path*",
     "/videos/:path*",
+    "/assets/:path*",
     // Estate API
     "/api/trpc/:path*",
   ],
