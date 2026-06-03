@@ -1,3 +1,4 @@
+// Proxy middleware for Next.js 16 to route requests to the nested Hono estate backend
 import { NextRequest, NextResponse } from "next/server";
 import { verifyToken } from "@/lib/auth";
 
