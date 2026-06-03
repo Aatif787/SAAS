@@ -12,7 +12,8 @@ export async function connectDB() {
   const MONGODB_URI = process.env.MONGODB_URI;
 
   if (!MONGODB_URI) {
-    throw new Error("MONGODB_URI is not defined");
+    console.warn("MONGODB_URI is not defined — skipping database connection");
+    return null;
   }
 
   if (globalForMongoose.mongoose.conn) return globalForMongoose.mongoose.conn;
