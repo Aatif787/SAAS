@@ -8,7 +8,8 @@
     "build:estate": "npm run --prefix estate build",
     "build": "npm run build:next && npm run build:estate",
     "start": "next start",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "postinstall": "npm install --prefix estate"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",

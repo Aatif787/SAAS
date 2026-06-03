@@ -46,7 +46,7 @@ function ServiceCard({ service, index }: { service: ServiceItem; index: number }
     <motion.div
       ref={ref}
       style={{ scale, opacity, y }}
-      className="sticky top-28 mb-28 h-[75vh] w-full rounded-[2rem] overflow-hidden group shadow-2xl shadow-[#0A1E3D]/20"
+      className="sticky top-28 mb-28 h-auto min-h-[550px] md:h-[75vh] w-full rounded-[2rem] overflow-hidden group shadow-2xl shadow-[#0A1E3D]/20 py-12 md:py-0"
     >
       {/* Background Image with Ken Burns */}
       <div className="absolute inset-0 z-0 overflow-hidden">
@@ -68,24 +68,24 @@ function ServiceCard({ service, index }: { service: ServiceItem; index: number }
       </div>
 
       {/* Content */}
-      <div className="relative z-10 h-full flex flex-col justify-center p-12 md:p-20">
+      <div className="relative z-10 h-full flex flex-col justify-center p-6 sm:p-12 md:p-20">
         {/* Index */}
         <motion.div
           initial={{ opacity: 0, x: -30 }}
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: index * 0.1 }}
-          className="text-[120px] font-black text-white/[0.04] absolute top-8 right-12 leading-none select-none"
+          className="text-[60px] md:text-[120px] font-black text-white/[0.04] absolute top-4 right-6 md:top-8 md:right-12 leading-none select-none"
         >
           0{index + 1}
         </motion.div>
 
         {/* Tags */}
-        <div className="flex gap-3 mb-8">
+        <div className="flex flex-wrap gap-2 mb-6 md:mb-8">
           {service.tags.map((tag: string) => (
             <motion.span
               key={tag}
               whileHover={{ scale: 1.1, y: -2 }}
-              className="px-4 py-2 bg-white/10 backdrop-blur-md rounded-full text-[10px] font-bold uppercase tracking-widest text-white border border-white/10 hover:bg-[#E8761A]/30 hover:border-[#E8761A]/50 transition-all duration-300 cursor-default"
+              className="px-3.5 py-1.5 bg-white/10 backdrop-blur-md rounded-full text-[9px] font-bold uppercase tracking-widest text-white border border-white/10 hover:bg-[#E8761A]/30 hover:border-[#E8761A]/50 transition-all duration-300 cursor-default"
             >
               {tag}
             </motion.span>
@@ -93,12 +93,12 @@ function ServiceCard({ service, index }: { service: ServiceItem; index: number }
         </div>
 
         {/* Title */}
-        <div className="overflow-hidden mb-8">
+        <div className="overflow-hidden mb-6 md:mb-8">
           <motion.h3
             initial={{ y: 100 }}
             whileInView={{ y: 0 }}
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-            className="text-5xl md:text-8xl font-bold text-white tracking-tighter leading-none"
+            className="text-3xl sm:text-5xl md:text-8xl font-bold text-white tracking-tighter leading-none"
           >
             {service.title}
           </motion.h3>
@@ -109,7 +109,7 @@ function ServiceCard({ service, index }: { service: ServiceItem; index: number }
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
-          className="text-white/60 text-xl max-w-lg mb-12 leading-relaxed"
+          className="text-white/60 text-sm sm:text-lg md:text-xl max-w-lg mb-8 md:mb-12 leading-relaxed"
         >
           {service.desc}
         </motion.p>
@@ -117,15 +117,15 @@ function ServiceCard({ service, index }: { service: ServiceItem; index: number }
         {/* CTA */}
         <Link
           href="/ims-one-home-solution/services"
-          className="group/btn flex items-center gap-4 text-white font-bold uppercase tracking-widest text-xs w-fit"
+          className="group/btn flex items-center gap-4 text-white font-bold uppercase tracking-widest text-[10px] md:text-xs w-fit"
         >
           <motion.div
             whileHover={{ scale: 1.2, rotate: 45 }}
             transition={{ duration: 0.3 }}
-            className="w-14 h-14 rounded-full border border-white/20 flex items-center justify-center group-hover/btn:bg-[#E8761A] group-hover/btn:border-[#E8761A] transition-all duration-500 relative overflow-hidden"
+            className="w-10 h-10 md:w-14 md:h-14 rounded-full border border-white/20 flex items-center justify-center group-hover/btn:bg-[#E8761A] group-hover/btn:border-[#E8761A] transition-all duration-500 relative overflow-hidden"
           >
             <div className="absolute inset-0 bg-[#E8761A] scale-0 group-hover/btn:scale-100 rounded-full transition-transform duration-500" />
-            <ArrowRight size={20} className="relative z-10" />
+            <ArrowRight size={16} className="relative z-10" />
           </motion.div>
           <span className="group-hover/btn:text-[#E8761A] transition-colors duration-300">Explore Capability</span>
         </Link>

@@ -203,7 +203,7 @@ export default function ExtraordinaryHero() {
                   <span className="text-[10px] font-bold uppercase tracking-[0.5em] text-ims-gold block mb-6">
                     {VERTICALS[index].label}
                   </span>
-                  <div className="relative mb-8 flex flex-row flex-nowrap items-baseline select-none overflow-visible w-full gap-x-[0.85em]">
+                  <div className="relative mb-8 flex flex-row flex-wrap md:flex-nowrap justify-start items-baseline select-none overflow-visible w-full gap-x-[0.85em] gap-y-2">
                     {VERTICALS[index].name.split(" ").map((word, wIdx) => (
                       <div key={wIdx} className="relative flex flex-row flex-nowrap gap-x-[0.08em] select-none overflow-visible">
                         {word.split("").map((char, cIdx) => {
@@ -259,7 +259,7 @@ export default function ExtraordinaryHero() {
                     ))}
 
                     {/* Reflection - Consistent style */}
-                    <div className="absolute top-[95%] md:top-auto md:-bottom-24 left-0 right-0 flex flex-row flex-nowrap opacity-10 scale-y-[-1] blur-[1px] pointer-events-none select-none overflow-visible w-full gap-x-[0.85em]">
+                    <div className="absolute top-[95%] md:top-auto md:-bottom-24 left-0 right-0 flex flex-row flex-wrap md:flex-nowrap justify-start opacity-10 scale-y-[-1] blur-[1px] pointer-events-none select-none overflow-visible w-full gap-x-[0.85em] gap-y-2">
                       {VERTICALS[index].name.split(" ").map((word, wIdx) => (
                         <div key={`ref-word-${wIdx}`} className="relative flex flex-row flex-nowrap gap-x-[0.08em] select-none overflow-visible">
                           {word.split("").map((char, cIdx) => {

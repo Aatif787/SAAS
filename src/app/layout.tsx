@@ -30,7 +30,7 @@ export default function RootLayout({
         {/* Footer */}
         <footer className="py-24 bg-ims-blue text-ims-cream">
            <div className="container-xl">
-              <div className="grid gap-16 lg:grid-cols-4">
+              <div className="grid gap-16 sm:grid-cols-2 lg:grid-cols-4">
                  <div className="lg:col-span-1">
                     <h3 className="text-3xl font-serif text-white tracking-tight">IMS GROUP</h3>
                     <div className="mt-4 h-0.5 w-12 bg-ims-gold" />
