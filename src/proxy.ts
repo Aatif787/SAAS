@@ -32,7 +32,7 @@ function decodeToken(token: string): SessionPayload | null {
   }
 }
 
-const ESTATE_BACKEND = "http://localhost:3005";
+const ESTATE_BACKEND = process.env.ESTATE_BACKEND || "http://localhost:3005";
 const protectedRoutes = ["/dashboard", "/admin"];
 
 // Vite dev server paths that need proxying when referenced from estate pages
@@ -74,9 +74,7 @@ async function proxyToEstate(targetPath: string, request: NextRequest): Promise<
   };
 
   if (request.method !== "GET" && request.method !== "HEAD") {
-    fetchInit.body = request.body;
-    // @ts-expect-error -- duplex is required for streaming request bodies in undici/node
-    fetchInit.duplex = "half";
+    fetchInit.body = await request.arrayBuffer();
   }
 
   const proxyRes = await fetch(targetUrl, fetchInit);
@@ -173,7 +171,7 @@ export async function proxy(request: NextRequest) {
         return response;
       }
 
-      return proxyToEstate(backendPath, request);
+      return await proxyToEstate(backendPath, request);
     } catch {
       return new NextResponse("Estate service unavailable", { status: 502 });
     }
