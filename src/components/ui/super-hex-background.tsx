@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useMemo, useEffect } from "react";
+import { useRef, useMemo, useEffect, useState } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Sparkles } from "@react-three/drei";
 import * as THREE from "three";
@@ -8,8 +8,6 @@ import * as THREE from "three";
 /* ─── Constants ─── */
 const HEX_RADIUS = 0.48;
 const HEX_GAP = 0.04;
-const COLS = 26; // Good balance of coverage and performance
-const ROWS = 16;
 const HOVER_RADIUS = 2.4; 
 const SMOOTHING = 0.12;
 const MAX_LIFT = 0.7; // Maximum Z lift on hover
@@ -75,9 +73,10 @@ function createHexOutlineShape(outerRadius: number, innerRadius: number): THREE.
 /* ─── Instanced Hex Grid ─── */
 interface HexGridProps {
   mousePos: React.MutableRefObject<THREE.Vector2>;
+  isMobile: boolean;
 }
 
-function HexGrid({ mousePos }: HexGridProps) {
+function HexGrid({ mousePos, isMobile }: HexGridProps) {
   const meshRef = useRef<THREE.InstancedMesh>(null!);
   const starRef = useRef<THREE.InstancedMesh>(null!);
   const outlineRef = useRef<THREE.InstancedMesh>(null!);
@@ -85,6 +84,12 @@ function HexGrid({ mousePos }: HexGridProps) {
   const dummy = useMemo(() => new THREE.Object3D(), []);
   const starDummy = useMemo(() => new THREE.Object3D(), []);
   const outlineDummy = useMemo(() => new THREE.Object3D(), []);
+
+  // Performance Optimization: Sizing down the grid on mobile
+  const COLS = isMobile ? 14 : 26;
+  const ROWS = isMobile ? 10 : 16;
+  const total = COLS * ROWS;
+  const maxTotal = 26 * 16; // Maximum static size for WebGL buffers
 
   // Geometry construction
   const hexGeo = useMemo(() => {
@@ -115,21 +120,21 @@ function HexGrid({ mousePos }: HexGridProps) {
   }, []);
 
   // Base grid layout math
-  const { width, height, offsetX, offsetY, total } = useMemo(() => {
+  const { width, height, offsetX, offsetY } = useMemo(() => {
     const w = Math.sqrt(3) * (HEX_RADIUS + HEX_GAP);
     const h = 1.5 * (HEX_RADIUS + HEX_GAP);
     const ox = -((COLS - 1) * w) / 2;
     const oy = -((ROWS - 1) * h) / 2;
-    return { width: w, height: h, offsetX: ox, offsetY: oy, total: COLS * ROWS };
-  }, []);
+    return { width: w, height: h, offsetX: ox, offsetY: oy };
+  }, [COLS, ROWS]);
 
   // Persistent per-hex instance state
   const state = useMemo(() => {
     const initialPositions: { x: number; y: number }[] = [];
-    const currentZ = new Float32Array(total);
-    const currentScale = new Float32Array(total);
-    const starRotations = new Float32Array(total);
-    const hasStar = new Uint8Array(total);
+    const currentZ = new Float32Array(maxTotal);
+    const currentScale = new Float32Array(maxTotal);
+    const starRotations = new Float32Array(maxTotal);
+    const hasStar = new Uint8Array(maxTotal);
 
     for (let r = 0; r < ROWS; r++) {
       for (let c = 0; c < COLS; c++) {
@@ -143,16 +148,22 @@ function HexGrid({ mousePos }: HexGridProps) {
     }
 
     return { initialPositions, currentZ, currentScale, starRotations, hasStar };
-  }, [offsetX, offsetY, width, height, total]);
+  }, [offsetX, offsetY, width, height, maxTotal, COLS, ROWS]);
 
   // Color interpolators
   const baseColor = useMemo(() => new THREE.Color("#F3EEE0"), []); // Elegant cream
   const goldColor = useMemo(() => new THREE.Color("#C5A059"), []); // Brand gold
 
-  // Initial setup
+  // Initial setup and count adjustment
   useEffect(() => {
+    if (meshRef.current) meshRef.current.count = total;
+    if (outlineRef.current) outlineRef.current.count = total;
+    if (starRef.current) starRef.current.count = total;
+
     for (let i = 0; i < total; i++) {
       const pos = state.initialPositions[i];
+      if (!pos) continue;
+
       dummy.position.set(pos.x, pos.y, 0);
       dummy.scale.set(1, 1, 1);
       dummy.updateMatrix();
@@ -165,7 +176,7 @@ function HexGrid({ mousePos }: HexGridProps) {
       outlineRef.current.setColorAt(i, goldColor);
 
       if (state.hasStar[i]) {
-        starDummy.position.set(pos.x, pos.y, 0.02);
+        starDummy.position.set(pos.x, pos.y, 0.25);
         starDummy.scale.set(0.6, 0.6, 1);
         starDummy.rotation.z = state.starRotations[i];
         starDummy.updateMatrix();
@@ -193,6 +204,8 @@ function HexGrid({ mousePos }: HexGridProps) {
 
     for (let i = 0; i < total; i++) {
       const pos = state.initialPositions[i];
+      if (!pos) continue;
+
       const dx = pos.x - mx;
       const dy = pos.y - my;
       const dist = Math.sqrt(dx * dx + dy * dy);
@@ -225,11 +238,11 @@ function HexGrid({ mousePos }: HexGridProps) {
       outlineDummy.updateMatrix();
       outlineRef.current.setMatrixAt(i, outlineDummy.matrix);
 
-      // Update stars
+      // Update stars - spinning continuously for beautiful rotation
       if (state.hasStar[i]) {
-        starDummy.position.set(pos.x, pos.y, z + 0.1);
+        starDummy.position.set(pos.x, pos.y, z + 0.25);
         starDummy.scale.set(scale * 0.65, scale * 0.65, 1);
-        starDummy.rotation.z = state.starRotations[i] + time * 0.3;
+        starDummy.rotation.z = state.starRotations[i] + time * 1.0; // Distinct speed for nice rotation
         starDummy.updateMatrix();
         starRef.current.setMatrixAt(i, starDummy.matrix);
       }
@@ -244,16 +257,22 @@ function HexGrid({ mousePos }: HexGridProps) {
 
   return (
     <>
-      <instancedMesh ref={meshRef} args={[hexGeo, null as any, total]} castShadow receiveShadow>
+      <instancedMesh ref={meshRef} args={[hexGeo, null as any, maxTotal]} castShadow receiveShadow>
         <meshStandardMaterial roughness={0.3} metalness={0.1} />
       </instancedMesh>
 
-      <instancedMesh ref={outlineRef} args={[outlineGeo, null as any, total]}>
+      <instancedMesh ref={outlineRef} args={[outlineGeo, null as any, maxTotal]}>
         <meshBasicMaterial transparent opacity={0.35} />
       </instancedMesh>
 
-      <instancedMesh ref={starRef} args={[starGeo, null as any, total]}>
-        <meshStandardMaterial roughness={0.1} metalness={0.8} color="#FFFFFF" emissive="#C5A059" emissiveIntensity={0.5} />
+      <instancedMesh ref={starRef} args={[starGeo, null as any, maxTotal]}>
+        <meshStandardMaterial 
+          roughness={0.1} 
+          metalness={0.9} 
+          color="#C5A059" 
+          emissive="#FF8C00" 
+          emissiveIntensity={0.85} 
+        />
       </instancedMesh>
     </>
   );
@@ -286,12 +305,22 @@ function MouseTracker({ mousePos }: MouseTrackerProps) {
 /* ─── Main Component ─── */
 export default function SuperHexBackground() {
   const mousePos = useRef(new THREE.Vector2(-100, -100));
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   return (
     <div className="absolute inset-0 z-0 bg-[#FDFBF7]">
       <Canvas
         shadows
-        camera={{ position: [0, 0, 12], fov: 38 }}
+        camera={{ position: [0, 0, 12], fov: isMobile ? 48 : 38 }}
         dpr={[1, 1.25]}
         gl={{ 
           antialias: true, 
@@ -305,7 +334,7 @@ export default function SuperHexBackground() {
           position={[4, 6, 8]} 
           intensity={1.2} 
           castShadow
-          shadow-mapSize={[1024, 1024]}
+          shadow-mapSize={isMobile ? [512, 512] : [1024, 1024]}
           shadow-bias={-0.001}
         />
 
@@ -316,13 +345,13 @@ export default function SuperHexBackground() {
         />
 
         <MouseTracker mousePos={mousePos} />
-        <HexGrid mousePos={mousePos} />
+        <HexGrid mousePos={mousePos} isMobile={isMobile} />
         
         <Sparkles 
-          count={25} 
-          scale={[14, 10, 2]} 
+          count={isMobile ? 12 : 25}
+          scale={isMobile ? [8, 6, 2] : [14, 10, 2]} 
           color="#C5A059" 
-          size={1.5} 
+          size={isMobile ? 1.0 : 1.5} 
           speed={0.25} 
         />
       </Canvas>

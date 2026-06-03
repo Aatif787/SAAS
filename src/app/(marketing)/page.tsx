@@ -38,8 +38,11 @@ export default function HomePage() {
       </ScrollScale>
 
       <ScrollScale>
-        <div className="bg-ims-blue py-20">
-          <div className="container-xl">
+        <div className="bg-[#050508] py-20 border-y border-white/5 relative overflow-hidden">
+          {/* Cyberpunk Glows */}
+          <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-64 h-64 bg-[#E8761A]/5 blur-[100px] rounded-full pointer-events-none" />
+          <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-64 h-64 bg-[#00E676]/5 blur-[100px] rounded-full pointer-events-none" />
+          <div className="container-xl relative z-10">
             <h2 className="text-white text-center mb-16 text-4xl font-serif">Deep AI Capabilities</h2>
             <AIIntegration />
           </div>
