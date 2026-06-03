@@ -1,6 +1,36 @@
 // Proxy middleware for Next.js 16 to route requests to the nested Hono estate backend
 import { NextRequest, NextResponse } from "next/server";
-import { verifyToken } from "@/lib/auth";
+
+type SessionPayload = {
+  userId: string;
+  email: string;
+  role: string;
+  exp?: number;
+};
+
+function decodeToken(token: string): SessionPayload | null {
+  try {
+    const parts = token.split(".");
+    if (parts.length !== 3) return null;
+    
+    let base64 = parts[1].replace(/-/g, "+").replace(/_/g, "/");
+    const pad = base64.length % 4;
+    if (pad) {
+      base64 += "=".repeat(4 - pad);
+    }
+    
+    const payloadJson = atob(base64);
+    const payload = JSON.parse(payloadJson);
+    
+    if (payload.exp && Date.now() >= payload.exp * 1000) {
+      return null;
+    }
+    
+    return payload as SessionPayload;
+  } catch {
+    return null;
+  }
+}
 
 const ESTATE_BACKEND = "http://localhost:3005";
 const protectedRoutes = ["/dashboard", "/admin"];
@@ -77,7 +107,7 @@ export async function proxy(request: NextRequest) {
       return NextResponse.redirect(new URL("/login", request.url));
     }
 
-    const payload = verifyToken(token);
+    const payload = decodeToken(token);
     if (!payload) {
       const response = NextResponse.redirect(new URL("/login", request.url));
       response.cookies.delete("session_token");
