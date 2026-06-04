@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 
-const PARTICLE_COUNT = 12;
+const PARTICLE_COUNT = 24;
 const COLORS = ["#D32F2F", "#C5A059", "#FFFFFF", "#C5A059"];
 
 interface Particle {
@@ -24,9 +24,9 @@ export default function CursorParticles() {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    // Skip on mobile/touch devices
+    // Only skip on actual mobile screen widths (avoids breaking on touchscreen laptops)
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768 || "ontouchstart" in window);
+      setIsMobile(window.innerWidth < 768);
     };
     checkMobile();
     window.addEventListener("resize", checkMobile, { passive: true });
@@ -92,6 +92,8 @@ export default function CursorParticles() {
         ctx.closePath();
         ctx.fillStyle = p.color;
         ctx.globalAlpha = p.alpha;
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = p.color;
         ctx.fill();
       }
 
@@ -116,7 +118,6 @@ export default function CursorParticles() {
     <canvas
       ref={canvasRef}
       className="pointer-events-none fixed inset-0 z-[999]"
-      style={{ mixBlendMode: "screen" }}
     />
   );
 }
