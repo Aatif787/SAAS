@@ -123,6 +123,11 @@ export async function proxy(request: NextRequest) {
     const backendPath = pathname === "/estate" ? "/" : pathname.slice("/estate".length);
 
     try {
+      // Direct pass-through for non-GET/HEAD requests to prevent body consumption or double-fetch issues
+      if (request.method !== "GET" && request.method !== "HEAD") {
+        return await proxyToEstate(backendPath, request);
+      }
+
       const targetUrl = `${ESTATE_BACKEND}${backendPath}${request.nextUrl.search}`;
 
       const headers: Record<string, string> = {};
@@ -172,8 +177,22 @@ export async function proxy(request: NextRequest) {
         return response;
       }
 
-      return await proxyToEstate(backendPath, request);
-    } catch {
+      // Reuse the response from the initial fetch for other GET requests to prevent double-fetching
+      const response = new NextResponse(proxyRes.body, {
+        status: proxyRes.status,
+        statusText: proxyRes.statusText,
+      });
+
+      const skipHeaders = new Set(["content-encoding", "transfer-encoding"]);
+      proxyRes.headers.forEach((value, key) => {
+        if (!skipHeaders.has(key.toLowerCase())) {
+          response.headers.set(key, value);
+        }
+      });
+
+      return response;
+    } catch (err) {
+      console.error("PROXY ERROR for /estate:", err);
       return new NextResponse("Estate service unavailable", { status: 502 });
     }
   }

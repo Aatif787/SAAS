@@ -336,5 +336,40 @@
       "createdAt": "2026-05-30T16:21:04.073Z",
       "updatedAt": "2026-05-30T16:21:04.073Z"
     }
+  ],
+  "agents": [
+    {
+      "id": 1,
+      "name": "Shay Trotsky",
+      "title": "Founder & CEO",
+      "email": "shay@troitsky.re",
+      "phone": "+972-50-123-4567",
+      "whatsapp": "+972-50-123-4567",
+      "bio": "With over 15 years of experience in luxury real estate, Shay has built a reputation for unmatched market knowledge and personalized service. His passion for architecture and design drives the agency's curated approach to property selection.",
+      "photo": "/images/img8.jpg",
+      "createdAt": "2026-06-04T02:39:35.900Z"
+    },
+    {
+      "id": 2,
+      "name": "Dana Cohen",
+      "title": "Senior Agent",
+      "email": "dana@troitsky.re",
+      "phone": "+972-50-234-5678",
+      "whatsapp": "+972-50-234-5678",
+      "bio": "Dana specializes in luxury waterfront properties and has facilitated over ₪1 billion in transactions. Her deep understanding of Netanya's coastal neighborhoods makes her an invaluable resource for discerning buyers.",
+      "photo": null,
+      "createdAt": "2026-06-04T02:39:35.900Z"
+    },
+    {
+      "id": 3,
+      "name": "Ron Levy",
+      "title": "Property Consultant",
+      "email": "ron@troitsky.re",
+      "phone": "+972-50-345-6789",
+      "whatsapp": "+972-50-345-6789",
+      "bio": "Ron's expertise spans investment properties and new developments. He provides data-driven insights to help clients make informed decisions in Netanya's dynamic real estate market.",
+      "photo": null,
+      "createdAt": "2026-06-04T02:39:35.900Z"
+    }
   ]
 }

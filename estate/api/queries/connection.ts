@@ -485,7 +485,12 @@ class QueryBuilder {
 
       const isCountQuery = this.selectFields && 
         Object.values(this.selectFields).some((val: any) => 
-          val && (val.constructor?.name === "Count" || typeof val === "function" || (val.map && typeof val.map === "function") || (typeof val === "object" && val.name === "count"))
+          val && (
+            val.constructor?.name === "Count" || 
+            typeof val === "function" || 
+            (val.map && typeof val.map === "function") || 
+            (typeof val === "object" && (val.name === "count" || (val.constructor?.name === "SQL" && JSON.stringify(val).includes("count("))))
+          )
         );
       
       if (isCountQuery) {
