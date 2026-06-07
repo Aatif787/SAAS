@@ -53,29 +53,29 @@ const stats = [
     value: "28", 
     suffix: "+", 
     icon: <Calendar size={18} />,
-    numColor: "text-[#E8761A]",       // Cyberpunk Orange
-    suffixColor: "text-[#00E676]",    // Cyberpunk Green
-    labelColor: "text-white/60 group-hover:text-white", // White
-    iconColor: "text-[#E8761A] opacity-70 group-hover:opacity-100"
+    numColor: "text-ims-gold",       // Luxury Gold
+    suffixColor: "text-ims-cream",    // Alabaster Cream
+    labelColor: "text-ims-cream/60 group-hover:text-ims-cream", 
+    iconColor: "text-ims-gold opacity-70 group-hover:opacity-100"
   },
   { 
     label: "Successful Projects", 
     value: "500", 
     suffix: "+", 
     icon: <CheckCircle size={18} />,
-    numColor: "text-[#00E676]",       // Cyberpunk Green
-    suffixColor: "text-white",        // Cyberpunk White
-    labelColor: "text-[#E8761A]/80 group-hover:text-[#E8761A]", // Cyberpunk Orange
-    iconColor: "text-[#00E676] opacity-70 group-hover:opacity-100"
+    numColor: "text-ims-cream",       // Alabaster Cream
+    suffixColor: "text-white",        
+    labelColor: "text-ims-gold/80 group-hover:text-ims-gold", 
+    iconColor: "text-ims-cream opacity-70 group-hover:opacity-100"
   },
   { 
     label: "Client Base", 
     value: "10000", 
     suffix: "+", 
     icon: <Users size={18} />,
-    numColor: "text-white",           // Cyberpunk White
-    suffixColor: "text-[#E8761A]",    // Cyberpunk Orange
-    labelColor: "text-[#00E676]/80 group-hover:text-[#00E676]", // Cyberpunk Green
+    numColor: "text-white",           
+    suffixColor: "text-ims-gold",    // Luxury Gold
+    labelColor: "text-ims-cream/80 group-hover:text-ims-cream", 
     iconColor: "text-white opacity-70 group-hover:opacity-100"
   },
   { 
@@ -83,19 +83,19 @@ const stats = [
     value: "7", 
     suffix: "", 
     icon: <Briefcase size={18} />,
-    numColor: "text-[#E8761A]",       // Cyberpunk Orange
-    suffixColor: "text-[#00E676]",    // Cyberpunk Green
-    labelColor: "text-white/60 group-hover:text-white", // White
-    iconColor: "text-[#E8761A] opacity-70 group-hover:opacity-100"
+    numColor: "text-ims-gold",       // Luxury Gold
+    suffixColor: "text-ims-cream",    // Alabaster Cream
+    labelColor: "text-ims-cream/60 group-hover:text-ims-cream", 
+    iconColor: "text-ims-gold opacity-70 group-hover:opacity-100"
   }
 ];
 
 export default function Stats() {
   return (
-    <section className="bg-[#050508] py-12 sm:py-16 border-y border-white/5 relative overflow-hidden">
-      {/* Cyberpunk Background Glows */}
-      <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-64 h-64 bg-[#E8761A]/10 blur-[90px] rounded-full pointer-events-none" />
-      <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-64 h-64 bg-[#00E676]/10 blur-[90px] rounded-full pointer-events-none" />
+    <section className="bg-[#0A1424] py-12 sm:py-16 border-y border-white/5 relative overflow-hidden">
+      {/* Premium Background Glows */}
+      <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-64 h-64 bg-ims-gold/5 blur-[90px] rounded-full pointer-events-none" />
+      <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-64 h-64 bg-ims-blue/10 blur-[90px] rounded-full pointer-events-none" />
 
       <div className="container-xl relative z-10">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
@@ -106,7 +106,7 @@ export default function Stats() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-20px" }}
               transition={{ delay: i * 0.08 }}
-              className="text-center group p-4 sm:p-6 hover:bg-white/5 transition-all duration-300 border border-white/5 rounded-xl bg-black/40 backdrop-blur-md hover:border-white/10 hover:shadow-[0_0_25px_rgba(232,118,26,0.05)]"
+              className="text-center group p-4 sm:p-6 hover:bg-white/5 transition-all duration-300 border border-white/5 rounded-xl bg-black/40 backdrop-blur-md hover:border-white/10 hover:shadow-[0_0_25px_rgba(197,160,89,0.05)]"
             >
               <div className="flex flex-col items-center">
                  <div className={`mb-3 sm:mb-4 transition-all duration-300 ${stat.iconColor}`}>

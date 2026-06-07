@@ -20,7 +20,7 @@ const businessLinks = [
   { name: "IMS UPVC Doors & Windows", href: "/upvc" },
   { name: "IMS Steel", href: "/ims-steel" },
   { name: "IMS Infra", href: "/about" },
-  { name: "IMS Estate Empire", href: "/estate" },
+  { name: "IMS Estate Empire", href: "/ims-estate-empire" },
 ];
 
 export default function Navbar() {

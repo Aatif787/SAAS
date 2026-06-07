@@ -63,7 +63,7 @@ const businesses = [
     icon: <Building2 className="w-8 h-8" />,
     image: "/images/estate-empire-4k.png",
     color: "text-ims-red",
-    href: "/estate"
+    href: "/ims-estate-empire"
   }
 ];
 

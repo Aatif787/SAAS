@@ -25,6 +25,12 @@
     "paths": {
       "@/*": [
         "./src/*"
+      ],
+      "@db/*": [
+        "./src/db/*"
+      ],
+      "@contracts/*": [
+        "./src/contracts/*"
       ]
     }
   },
@@ -36,7 +42,6 @@
     ".next/dev/types/**/*.ts"
   ],
   "exclude": [
-    "node_modules",
-    "estate"
+    "node_modules"
   ]
 }

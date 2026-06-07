@@ -18,7 +18,7 @@ const VERTICALS = [
   { id: "03", name: "Infra", label: "Infrastructure", img: "/images/corporate-hub-4k.png", color: "#00dcc4", href: "/about" },
   { id: "04", name: "Steel", label: "Manufacturing", img: "/images/steel-infra-4k.png", color: "#4A90E2", href: "/ims-steel" },
   { id: "05", name: "UPVC", label: "Industrial", img: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&q=80&w=1200", color: "#F5A623", href: "/upvc" },
-  { id: "06", name: "Estate Empire", label: "Lifestyle", img: "/images/estate-empire-4k.png", color: "#7ED321", href: "/estate" },
+  { id: "06", name: "Estate Empire", label: "Lifestyle", img: "/images/estate-empire-4k.png", color: "#7ED321", href: "/ims-estate-empire" },
 ];
 
 const getCharWidth = (char: string) => {
@@ -69,13 +69,13 @@ export default function ExtraordinaryHero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.5, ease: [0.19, 1, 0.22, 1] }}
-          className="mb-16"
+          className="mb-8 md:mb-16"
         >
           <span className="text-[11px] font-bold uppercase tracking-[0.6em] text-ims-gold mb-8 block">
             ESTABLISHED EXCELLENCE • SINCE 1996
           </span>
           
-          <h1 className="text-[clamp(3.5rem,10vw,10rem)] font-serif leading-[0.85] text-ims-blue">
+          <h1 className="text-[clamp(2.5rem,8vw,8rem)] md:text-[clamp(4.5rem,10vw,10rem)] font-serif leading-[0.85] text-ims-blue">
             <motion.span 
               initial={{ opacity: 0, x: -30, filter: "blur(10px)" }}
               animate={{ opacity: 0.5, x: 0, filter: "blur(0px)" }}
@@ -157,7 +157,7 @@ export default function ExtraordinaryHero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.2, duration: 2 }}
-          className="max-w-3xl mb-24"
+          className="max-w-3xl mb-12 md:mb-24"
         >
           <h2 className="text-2xl md:text-4xl font-serif text-ims-blue/70 italic leading-relaxed">
             &ldquo;Redefining the <span className="text-ims-blue font-bold not-italic border-b border-ims-gold/30 pb-1">EXTRAORDINARY</span> through 
@@ -193,17 +193,17 @@ export default function ExtraordinaryHero() {
                       <div className="absolute inset-0 bg-ims-blue/10 mix-blend-multiply" />
                    </div>
                    {/* Vertical Label Tag */}
-                   <div className="absolute -right-6 top-1/2 -translate-y-1/2 rotate-90 origin-center bg-ims-red text-white text-[9px] font-bold uppercase tracking-[0.4em] px-6 py-2 shadow-xl">
+                   <div className="absolute right-4 top-4 md:-right-6 md:top-1/2 md:-translate-y-1/2 md:rotate-90 md:origin-center bg-ims-red text-white text-[9px] font-bold uppercase tracking-[0.4em] px-4 py-1.5 md:px-6 md:py-2 shadow-xl z-10">
                       VERTICAL 0{VERTICALS[index].id}
                    </div>
                 </div>
 
                 {/* Text Side - Classical Typography with Realistic Liquid Effect */}
-                <div className="text-left">
+                <div className="text-center md:text-left flex flex-col items-center md:items-start">
                   <span className="text-[10px] font-bold uppercase tracking-[0.5em] text-ims-gold block mb-6">
                     {VERTICALS[index].label}
                   </span>
-                  <div className="relative mb-8 flex flex-row flex-wrap md:flex-nowrap justify-start items-baseline select-none overflow-visible w-full gap-x-[0.85em] gap-y-2">
+                  <div className="relative mb-8 flex flex-row flex-wrap md:flex-nowrap justify-center md:justify-start items-baseline select-none overflow-visible w-full gap-x-[0.85em] gap-y-2">
                     {VERTICALS[index].name.split(" ").map((word, wIdx) => (
                       <div key={wIdx} className="relative flex flex-row flex-nowrap gap-x-[0.08em] select-none overflow-visible">
                         {word.split("").map((char, cIdx) => {
@@ -259,7 +259,7 @@ export default function ExtraordinaryHero() {
                     ))}
 
                     {/* Reflection - Consistent style */}
-                    <div className="absolute top-[95%] md:top-auto md:-bottom-24 left-0 right-0 flex flex-row flex-wrap md:flex-nowrap justify-start opacity-10 scale-y-[-1] blur-[1px] pointer-events-none select-none overflow-visible w-full gap-x-[0.85em] gap-y-2">
+                    <div className="absolute top-[95%] md:top-auto md:-bottom-24 left-0 right-0 hidden md:flex flex-row flex-wrap md:flex-nowrap justify-start opacity-10 scale-y-[-1] blur-[1px] pointer-events-none select-none overflow-visible w-full gap-x-[0.85em] gap-y-2">
                       {VERTICALS[index].name.split(" ").map((word, wIdx) => (
                         <div key={`ref-word-${wIdx}`} className="relative flex flex-row flex-nowrap gap-x-[0.08em] select-none overflow-visible">
                           {word.split("").map((char, cIdx) => {
@@ -295,11 +295,11 @@ export default function ExtraordinaryHero() {
                     </div>
                   </div>
 
-                  <p className="text-ims-charcoal/60 leading-relaxed font-medium text-lg max-w-md mb-10">
+                  <p className="text-ims-charcoal/60 leading-relaxed font-medium text-lg max-w-md mb-10 text-center md:text-left mx-auto md:mx-0">
                     Our commitment to excellence in {VERTICALS[index].label.toLowerCase()} is reflected in every 
                     detail of our {VERTICALS[index].name.toLowerCase()} operations.
                   </p>
-                  <Link href={VERTICALS[index].href} className="flex items-center gap-4 text-ims-blue font-bold uppercase tracking-[0.3em] text-[11px] hover:text-ims-red transition-colors group">
+                  <Link href={VERTICALS[index].href} className="flex items-center justify-center md:justify-start gap-4 text-ims-blue font-bold uppercase tracking-[0.3em] text-[11px] hover:text-ims-red transition-colors group w-full md:w-auto">
                     View Portfolio 
                     <div className="h-px w-12 bg-ims-blue/30 group-hover:w-16 group-hover:bg-ims-red transition-all" />
                   </Link>
@@ -312,19 +312,24 @@ export default function ExtraordinaryHero() {
         </div>
 
         {/* Progress Navigation - Elegant Dots */}
-        <div className="mt-12 flex gap-8">
-          {VERTICALS.map((v, i) => (
-            <button 
-              key={v.id}
-              onClick={() => setIndex(i)}
-              className="flex flex-col items-center gap-3 group"
-            >
-              <div className={`h-1 transition-all duration-700 ${index === i ? 'w-12 bg-ims-red' : 'w-4 bg-ims-blue/10 group-hover:bg-ims-blue/30'}`} />
-              <span className={`text-[9px] font-bold tracking-widest transition-opacity duration-500 ${index === i ? 'opacity-100 text-ims-blue' : 'opacity-0'}`}>
-                {v.name}
-              </span>
-            </button>
-          ))}
+        <div className="mt-12 flex flex-col items-center gap-4">
+          <div className="flex gap-4 md:gap-8 justify-center flex-wrap">
+            {VERTICALS.map((v, i) => (
+              <button 
+                key={v.id}
+                onClick={() => setIndex(i)}
+                className="flex flex-col items-center group cursor-pointer py-2"
+              >
+                <div className={`h-1 transition-all duration-700 ${index === i ? 'w-10 md:w-12 bg-ims-red' : 'w-3 md:w-4 bg-ims-blue/10 group-hover:bg-ims-blue/30'}`} />
+                <span className={`text-[9px] font-bold tracking-widest transition-opacity duration-500 hidden md:block mt-3 ${index === i ? 'opacity-100 text-ims-blue' : 'opacity-0'}`}>
+                  {v.name}
+                </span>
+              </button>
+            ))}
+          </div>
+          <span className="text-[10px] font-bold tracking-[0.4em] text-ims-blue uppercase block md:hidden">
+            {VERTICALS[index].name}
+          </span>
         </div>
       </motion.div>
 

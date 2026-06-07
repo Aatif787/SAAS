@@ -8,7 +8,7 @@ export default function Footer() {
   const pathname = usePathname();
   
   // Hide global footer on vertical-specific subpages that have their own footers
-  const hideOnPaths = ["/upvc", "/ims-one-home-solution", "/admin", "/hospital/admin", "/upvc-admin"];
+  const hideOnPaths = ["/upvc", "/ims-one-home-solution", "/admin", "/hospital/admin", "/upvc-admin", "/ims-estate-empire"];
   const shouldHide = hideOnPaths.some(path => pathname.startsWith(path));
 
   if (shouldHide) return null;
@@ -32,7 +32,7 @@ export default function Footer() {
                    <li><Link href="/upvc" className="hover:text-white transition-colors cursor-pointer block">IMS UPVC Doors & Windows</Link></li>
                    <li><Link href="/ims-steel" className="hover:text-white transition-colors cursor-pointer block">IMS Steel</Link></li>
                    <li><Link href="/about" className="hover:text-white transition-colors cursor-pointer block">IMS Infra</Link></li>
-                   <li><Link href="/estate" className="hover:text-white transition-colors cursor-pointer block">IMS Estate Empire</Link></li>
+                   <li><Link href="/ims-estate-empire" className="hover:text-white transition-colors cursor-pointer block">IMS Estate Empire</Link></li>
                 </ul>
              </div>
 

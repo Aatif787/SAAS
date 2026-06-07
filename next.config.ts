@@ -9,6 +9,20 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "images.unsplash.com" },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: "/estate",
+        destination: "/ims-estate-empire",
+        permanent: true,
+      },
+      {
+        source: "/estate/:path*",
+        destination: "/ims-estate-empire/:path*",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

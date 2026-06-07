@@ -73,10 +73,9 @@ function createHexOutlineShape(outerRadius: number, innerRadius: number): THREE.
 /* ─── Instanced Hex Grid ─── */
 interface HexGridProps {
   mousePos: React.MutableRefObject<THREE.Vector2>;
-  isMobile: boolean;
 }
 
-function HexGrid({ mousePos, isMobile }: HexGridProps) {
+function HexGrid({ mousePos }: HexGridProps) {
   const meshRef = useRef<THREE.InstancedMesh>(null!);
   const starRef = useRef<THREE.InstancedMesh>(null!);
   const outlineRef = useRef<THREE.InstancedMesh>(null!);
@@ -85,9 +84,8 @@ function HexGrid({ mousePos, isMobile }: HexGridProps) {
   const starDummy = useMemo(() => new THREE.Object3D(), []);
   const outlineDummy = useMemo(() => new THREE.Object3D(), []);
 
-  // Performance Optimization: Sizing down the grid on mobile
-  const COLS = isMobile ? 14 : 26;
-  const ROWS = isMobile ? 10 : 16;
+  const COLS = 26;
+  const ROWS = 16;
   const total = COLS * ROWS;
   const maxTotal = 26 * 16; // Maximum static size for WebGL buffers
 
@@ -123,7 +121,8 @@ function HexGrid({ mousePos, isMobile }: HexGridProps) {
   const { width, height, offsetX, offsetY } = useMemo(() => {
     const w = Math.sqrt(3) * (HEX_RADIUS + HEX_GAP);
     const h = 1.5 * (HEX_RADIUS + HEX_GAP);
-    const ox = -((COLS - 1) * w) / 2;
+    // Center alignment correction to balance the row offset shift
+    const ox = -((COLS - 1) * w) / 2 - w / 4;
     const oy = -((ROWS - 1) * h) / 2;
     return { width: w, height: h, offsetX: ox, offsetY: oy };
   }, [COLS, ROWS]);
@@ -195,13 +194,25 @@ function HexGrid({ mousePos, isMobile }: HexGridProps) {
     starRef.current.instanceMatrix.needsUpdate = true;
   }, [total, baseColor, goldColor, dummy, outlineDummy, starDummy, state]);
 
+  const lastMousePos = useRef(new THREE.Vector2(-100, -100));
+  const isFirstFrame = useRef(true);
+
   // Animation frame loop
   useFrame(({ clock }) => {
     const time = clock.getElapsedTime();
     const mx = mousePos.current.x;
     const my = mousePos.current.y;
-    const tempColor = new THREE.Color();
 
+    // Check if mouse moved
+    const mouseMoved = lastMousePos.current.distanceToSquared(mousePos.current) > 0.0001;
+    if (mouseMoved) {
+      lastMousePos.current.copy(mousePos.current);
+    }
+
+    let needsUpdate = mouseMoved || isFirstFrame.current;
+    isFirstFrame.current = false;
+
+    // Calculate changes and check if anything changed significantly
     for (let i = 0; i < total; i++) {
       const pos = state.initialPositions[i];
       if (!pos) continue;
@@ -210,49 +221,63 @@ function HexGrid({ mousePos, isMobile }: HexGridProps) {
       const dy = pos.y - my;
       const dist = Math.sqrt(dx * dx + dy * dy);
 
-      // Lift calculations
       const active = dist < HOVER_RADIUS;
       const targetZ = active ? (1 - dist / HOVER_RADIUS) * MAX_LIFT : 0;
       const targetScale = active ? 1 + (1 - dist / HOVER_RADIUS) * 0.12 : 1;
 
-      state.currentZ[i] += (targetZ - state.currentZ[i]) * SMOOTHING;
-      state.currentScale[i] += (targetScale - state.currentScale[i]) * SMOOTHING;
+      const deltaZ = targetZ - state.currentZ[i];
+      const deltaScale = targetScale - state.currentScale[i];
 
-      const z = state.currentZ[i];
-      const scale = state.currentScale[i];
-
-      // Update base hexagons
-      dummy.position.set(pos.x, pos.y, z);
-      dummy.scale.set(scale, scale, 1);
-      dummy.updateMatrix();
-      meshRef.current.setMatrixAt(i, dummy.matrix);
-
-      // Glow color based on hover height
-      const t = z / MAX_LIFT;
-      tempColor.lerpColors(baseColor, goldColor, t);
-      meshRef.current.setColorAt(i, tempColor);
-
-      // Update outline meshes
-      outlineDummy.position.set(pos.x, pos.y, z + 0.06);
-      outlineDummy.scale.set(scale * 1.01, scale * 1.01, 1);
-      outlineDummy.updateMatrix();
-      outlineRef.current.setMatrixAt(i, outlineDummy.matrix);
-
-      // Update stars - spinning continuously for beautiful rotation
-      if (state.hasStar[i]) {
-        starDummy.position.set(pos.x, pos.y, z + 0.25);
-        starDummy.scale.set(scale * 0.65, scale * 0.65, 1);
-        starDummy.rotation.z = state.starRotations[i] + time * 1.0; // Distinct speed for nice rotation
-        starDummy.updateMatrix();
-        starRef.current.setMatrixAt(i, starDummy.matrix);
+      if (Math.abs(deltaZ) > 0.0005 || Math.abs(deltaScale) > 0.0005) {
+        needsUpdate = true;
       }
+
+      state.currentZ[i] += deltaZ * SMOOTHING;
+      state.currentScale[i] += deltaScale * SMOOTHING;
     }
 
-    meshRef.current.instanceMatrix.needsUpdate = true;
-    if (meshRef.current.instanceColor) meshRef.current.instanceColor.needsUpdate = true;
+    // Only update buffers on the GPU if there is active motion/transitions
+    if (needsUpdate) {
+      const tempColor = new THREE.Color();
+      for (let i = 0; i < total; i++) {
+        const pos = state.initialPositions[i];
+        if (!pos) continue;
 
-    outlineRef.current.instanceMatrix.needsUpdate = true;
-    starRef.current.instanceMatrix.needsUpdate = true;
+        const z = state.currentZ[i];
+        const scale = state.currentScale[i];
+
+        // Update base hexagons
+        dummy.position.set(pos.x, pos.y, z);
+        dummy.scale.set(scale, scale, 1);
+        dummy.updateMatrix();
+        meshRef.current.setMatrixAt(i, dummy.matrix);
+
+        // Glow color based on hover height
+        const t = z / MAX_LIFT;
+        tempColor.lerpColors(baseColor, goldColor, t);
+        meshRef.current.setColorAt(i, tempColor);
+
+        // Update outline meshes
+        outlineDummy.position.set(pos.x, pos.y, z + 0.06);
+        outlineDummy.scale.set(scale * 1.01, scale * 1.01, 1);
+        outlineDummy.updateMatrix();
+        outlineRef.current.setMatrixAt(i, outlineDummy.matrix);
+
+        // Update stars - spinning continuously
+        if (state.hasStar[i]) {
+          starDummy.position.set(pos.x, pos.y, z + 0.25);
+          starDummy.scale.set(scale * 0.65, scale * 0.65, 1);
+          starDummy.rotation.z = state.starRotations[i] + time * 1.0;
+          starDummy.updateMatrix();
+          starRef.current.setMatrixAt(i, starDummy.matrix);
+        }
+      }
+
+      meshRef.current.instanceMatrix.needsUpdate = true;
+      if (meshRef.current.instanceColor) meshRef.current.instanceColor.needsUpdate = true;
+      outlineRef.current.instanceMatrix.needsUpdate = true;
+      starRef.current.instanceMatrix.needsUpdate = true;
+    }
   });
 
   return (
@@ -270,7 +295,7 @@ function HexGrid({ mousePos, isMobile }: HexGridProps) {
           roughness={0.1} 
           metalness={0.9} 
           color="#C5A059" 
-          emissive="#FF8C00" 
+          emissive="#C5A059" 
           emissiveIntensity={0.85} 
         />
       </instancedMesh>
@@ -302,10 +327,110 @@ function MouseTracker({ mousePos }: MouseTrackerProps) {
   return null;
 }
 
+/* ─── Mobile SVG Fallback ─── */
+function MobileHexBackground() {
+  const COLS = 6;
+  const ROWS = 12;
+  const r = 45;
+  const w = Math.sqrt(3) * r;
+  const h = 1.5 * r;
+
+  const hexes = useMemo(() => {
+    const list = [];
+    for (let row = 0; row < ROWS; row++) {
+      for (let col = 0; col < COLS; col++) {
+        const cx = col * w + (row % 2) * (w / 2) + w / 2;
+        const cy = row * h + r;
+        const hash = (row * 7 + col * 13) % 100;
+        
+        let type: "gradient" | "outline-gold" | "star" | "subtle" = "subtle";
+        if (hash < 12) type = "gradient";
+        else if (hash < 25) type = "outline-gold";
+        else if (hash < 32) type = "star";
+
+        list.push({ cx, cy, type, id: `${row}-${col}`, hash });
+      }
+    }
+    return list;
+  }, [w, h, r]);
+
+  return (
+    <div className="absolute inset-0 z-0 bg-[#FDFBF7] overflow-hidden flex items-center justify-center">
+      <svg 
+        viewBox="0 0 510 840" 
+        className="w-full h-full object-cover opacity-60"
+        style={{ transform: "scale(1.05)" }}
+      >
+        <defs>
+          <linearGradient id="gold-hex-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#C5A059" stopOpacity={0.25} />
+            <stop offset="100%" stopColor="#FAF6F0" stopOpacity={0.05} />
+          </linearGradient>
+        </defs>
+
+        <style>{`
+          @keyframes spin-slow {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+          }
+        `}</style>
+
+        {hexes.map((hex) => {
+          const cx = hex.cx;
+          const cy = hex.cy;
+          const points = `
+            ${cx + 0.866 * r},${cy + 0.5 * r} 
+            ${cx},${cy + r} 
+            ${cx - 0.866 * r},${cy + 0.5 * r} 
+            ${cx - 0.866 * r},${cy - 0.5 * r} 
+            ${cx},${cy - r} 
+            ${cx + 0.866 * r},${cy - 0.5 * r}
+          `.replace(/\s+/g, " ");
+
+          return (
+            <g key={hex.id}>
+              {/* Base Hexagon */}
+              <polygon
+                points={points}
+                fill={hex.type === "gradient" ? "url(#gold-hex-grad)" : "none"}
+                stroke="#C5A059"
+                strokeWidth={hex.type === "outline-gold" ? 1.5 : 0.6}
+                strokeOpacity={
+                  hex.type === "outline-gold"
+                    ? 0.35
+                    : hex.type === "gradient"
+                    ? 0.2
+                    : 0.08
+                }
+              />
+
+              {/* Twinkling Rotating Star */}
+              {hex.type === "star" && (
+                <path
+                  d={`M ${cx} ${cy - 10} Q ${cx} ${cy} ${cx + 10} ${cy} Q ${cx} ${cy} ${cx} ${cy + 10} Q ${cx} ${cy} ${cx - 10} ${cy} Q ${cx} ${cy} ${cx} ${cy - 10} Z`}
+                  fill="#C5A059"
+                  opacity={0.8}
+                  style={{
+                    transformOrigin: `${cx}px ${cy}px`,
+                    animation: `spin-slow ${15 + (hex.hash % 15)}s linear infinite`,
+                  }}
+                />
+              )}
+            </g>
+          );
+        })}
+      </svg>
+      {/* Ambient Radial Vignette */}
+      <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-white/10 via-transparent to-[#FDFBF7]" />
+      <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_center,transparent_40%,#FDFBF7_95%)]" />
+    </div>
+  );
+}
+
 /* ─── Main Component ─── */
 export default function SuperHexBackground() {
   const mousePos = useRef(new THREE.Vector2(-100, -100));
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState<boolean | null>(null);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -316,11 +441,21 @@ export default function SuperHexBackground() {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
+  // Return loading state until mounted to avoid hydration mismatch
+  if (isMobile === null) {
+    return <div className="absolute inset-0 bg-[#FDFBF7]" />;
+  }
+
+  // Fallback to lightweight, perfectly aligned SVG on mobile
+  if (isMobile) {
+    return <MobileHexBackground />;
+  }
+
   return (
     <div className="absolute inset-0 z-0 bg-[#FDFBF7]">
       <Canvas
         shadows
-        camera={{ position: [0, 0, 12], fov: isMobile ? 48 : 38 }}
+        camera={{ position: [0, 0, 12], fov: 38 }}
         dpr={[1, 1.25]}
         gl={{ 
           antialias: true, 
@@ -334,7 +469,7 @@ export default function SuperHexBackground() {
           position={[4, 6, 8]} 
           intensity={1.2} 
           castShadow
-          shadow-mapSize={isMobile ? [512, 512] : [1024, 1024]}
+          shadow-mapSize={[1024, 1024]}
           shadow-bias={-0.001}
         />
 
@@ -345,13 +480,13 @@ export default function SuperHexBackground() {
         />
 
         <MouseTracker mousePos={mousePos} />
-        <HexGrid mousePos={mousePos} isMobile={isMobile} />
+        <HexGrid mousePos={mousePos} />
         
         <Sparkles 
-          count={isMobile ? 12 : 25}
-          scale={isMobile ? [8, 6, 2] : [14, 10, 2]} 
+          count={25}
+          scale={[14, 10, 2]} 
           color="#C5A059" 
-          size={isMobile ? 1.0 : 1.5} 
+          size={1.5} 
           speed={0.25} 
         />
       </Canvas>
