@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Toaster } from "sonner";
 import Navbar from "@/components/ui/navbar";
 import CursorParticlesWrapper from "@/components/ui/cursor-particles-wrapper";
+import CustomCursor from "@/components/ui/custom-cursor";
 
 export const metadata: Metadata = {
   title: "IMS GROUP | Building Trust Across Healthcare, Infrastructure & Home Solutions",
@@ -19,6 +20,7 @@ export default function RootLayout({
     <html lang="en" className="overflow-x-hidden">
       <body className="font-sans antialiased overflow-x-hidden w-full max-w-[100vw]">
         <CursorParticlesWrapper />
+        <CustomCursor />
         <Navbar />
 
         <div className="w-full max-w-[100vw] overflow-x-hidden">

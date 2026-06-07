@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
@@ -99,6 +100,90 @@ const cardVariants = {
   },
 };
 
+interface BusinessCardProps {
+  business: typeof businesses[0];
+}
+
+function BusinessCard({ business }: BusinessCardProps) {
+  const [coords, setCoords] = useState({ x: 0, y: 0 });
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    setCoords({
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+    });
+  };
+
+  return (
+    <Link href={business.href} className="group block cursor-pointer">
+      <motion.div
+        variants={cardVariants}
+        whileHover={{
+          y: -8,
+          transition: { duration: 0.3, ease: "easeOut" },
+        }}
+        onMouseMove={handleMouseMove}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        className="relative bg-white/80 backdrop-blur-sm border border-[#0A1E3D]/[0.06] p-1 rounded-sm overflow-hidden h-full shadow-[0_2px_20px_rgba(10,30,61,0.04)] hover:shadow-[0_20px_60px_rgba(197,160,89,0.1),0_8px_24px_rgba(10,30,61,0.06)] transition-shadow duration-500"
+      >
+        {/* Spotlight Radial Glow following the cursor */}
+        {isHovered && (
+          <div
+            className="absolute inset-0 pointer-events-none transition-opacity duration-300 opacity-100 z-10"
+            style={{
+              background: `radial-gradient(150px circle at ${coords.x}px ${coords.y}px, rgba(197, 160, 89, 0.1), transparent 80%)`,
+            }}
+          />
+        )}
+
+        {/* Shimmering Glass Overlay on hover */}
+        <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/10 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out pointer-events-none z-10" />
+
+        <div className="relative h-52 md:h-56 overflow-hidden mb-8">
+          <Image
+            src={business.image}
+            alt={business.title}
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            className="object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-110"
+          />
+          <div className="absolute inset-0 bg-[#0A1E3D]/25 group-hover:bg-transparent transition-colors duration-700" />
+          <div className="absolute top-5 left-5 bg-white/70 backdrop-blur-md p-3.5 border border-white/40 shadow-xl group-hover:scale-110 transition-transform duration-500">
+            <div className={business.color}>
+              {business.icon}
+            </div>
+          </div>
+        </div>
+
+        <div className="px-8 pb-8 md:px-10 md:pb-10">
+          <h3
+            className="text-xl md:text-2xl font-serif text-[#0A1E3D] leading-tight mb-4 group-hover:text-[#9B1B30] transition-colors duration-300 whitespace-nowrap overflow-hidden text-ellipsis"
+          >
+            {business.title}
+          </h3>
+          <p className="text-[#3B4252]/75 text-sm leading-relaxed mb-8 h-20 overflow-hidden text-justify font-medium">
+            {business.description}
+          </p>
+          <div className="flex items-center justify-between pt-6 border-t border-[#0A1E3D]/[0.06]">
+            <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#C5A059]">Market Leader</span>
+            <div
+              className="w-12 h-12 md:w-14 md:h-14 rounded-full border border-[#0A1E3D]/10 flex items-center justify-center group-hover:bg-[#0A1E3D] group-hover:text-white text-[#0A1E3D] transition-all duration-400 shadow-[0_0_20px_rgba(10,30,61,0.06)]"
+            >
+              <ArrowUpRight size={22} />
+            </div>
+          </div>
+        </div>
+
+        {/* Elegant bottom accent line on hover */}
+        <div className="absolute bottom-0 left-0 h-[3px] w-0 group-hover:w-full bg-gradient-to-r from-[#9B1B30] via-[#C5A059] to-[#9B1B30] transition-all duration-700 ease-out" />
+      </motion.div>
+    </Link>
+  );
+}
+
 export default function ServicesGrid() {
   return (
     <section className="py-20 md:py-28 bg-ims-cream relative overflow-hidden">
@@ -138,57 +223,7 @@ export default function ServicesGrid() {
           className="grid gap-8 md:gap-10 md:grid-cols-2 lg:grid-cols-3"
         >
           {businesses.map((business) => (
-            <Link href={business.href} key={business.title} className="group block cursor-pointer">
-              <motion.div
-                variants={cardVariants}
-                whileHover={{
-                  y: -8,
-                  transition: { duration: 0.3, ease: "easeOut" },
-                }}
-                className="relative bg-white/80 backdrop-blur-sm border border-[#0A1E3D]/[0.06] p-1 rounded-sm overflow-hidden h-full shadow-[0_2px_20px_rgba(10,30,61,0.04)] hover:shadow-[0_20px_60px_rgba(197,160,89,0.1),0_8px_24px_rgba(10,30,61,0.06)] transition-shadow duration-500"
-              >
-                {/* Shimmering Glass Overlay on hover */}
-                <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/10 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out pointer-events-none z-10" />
-
-                <div className="relative h-52 md:h-56 overflow-hidden mb-8">
-                  <Image
-                    src={business.image}
-                    alt={business.title}
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    className="object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-[#0A1E3D]/25 group-hover:bg-transparent transition-colors duration-700" />
-                  <div className="absolute top-5 left-5 bg-white/70 backdrop-blur-md p-3.5 border border-white/40 shadow-xl group-hover:scale-110 transition-transform duration-500">
-                    <div className={business.color}>
-                      {business.icon}
-                    </div>
-                  </div>
-                </div>
-
-                <div className="px-8 pb-8 md:px-10 md:pb-10">
-                  <h3
-                    className="text-xl md:text-2xl font-serif text-[#0A1E3D] leading-tight mb-4 group-hover:text-[#9B1B30] transition-colors duration-300 whitespace-nowrap overflow-hidden text-ellipsis"
-                  >
-                    {business.title}
-                  </h3>
-                  <p className="text-[#3B4252]/75 text-sm leading-relaxed mb-8 h-20 overflow-hidden text-justify font-medium">
-                    {business.description}
-                  </p>
-                  <div className="flex items-center justify-between pt-6 border-t border-[#0A1E3D]/[0.06]">
-                    <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#C5A059]">Market Leader</span>
-                    <div
-                      className="w-12 h-12 md:w-14 md:h-14 rounded-full border border-[#0A1E3D]/10 flex items-center justify-center group-hover:bg-[#0A1E3D] group-hover:text-white text-[#0A1E3D] transition-all duration-400 shadow-[0_0_20px_rgba(10,30,61,0.06)]"
-                    >
-                      <ArrowUpRight size={22} />
-                    </div>
-                  </div>
-                </div>
-
-                {/* Elegant bottom accent line on hover */}
-                <div className="absolute bottom-0 left-0 h-[3px] w-0 group-hover:w-full bg-gradient-to-r from-[#9B1B30] via-[#C5A059] to-[#9B1B30] transition-all duration-700 ease-out" />
-              </motion.div>
-            </Link>
+            <BusinessCard key={business.title} business={business} />
           ))}
         </motion.div>
       </div>

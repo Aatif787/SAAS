@@ -318,7 +318,7 @@ export default function ExtraordinaryHero() {
               <button 
                 key={v.id}
                 onClick={() => setIndex(i)}
-                className="flex flex-col items-center group cursor-pointer py-2"
+                className="flex flex-col items-center group cursor-pointer py-2 cursor-hover"
               >
                 <div className={`h-1 transition-all duration-700 ${index === i ? 'w-10 md:w-12 bg-[#9B1B30]' : 'w-3 md:w-4 bg-[#0A1E3D]/10 group-hover:bg-[#0A1E3D]/30'}`} />
                 <span className={`text-[9px] font-bold tracking-widest transition-opacity duration-500 hidden md:block mt-3 ${index === i ? 'opacity-100 text-[#0A1E3D]' : 'opacity-0'}`}>

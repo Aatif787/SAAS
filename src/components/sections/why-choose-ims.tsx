@@ -107,12 +107,12 @@ export default function WhyChooseIMS() {
               key={reason.title}
               variants={itemVariants}
               whileHover={{ y: -8, transition: { duration: 0.3 } }}
-              className="group p-6 sm:p-8 md:p-10 bg-[#FAF6F0]/30 border border-[#0A1E3D]/5 rounded-sm hover:bg-white hover:shadow-[0_20px_60px_rgba(10,30,61,0.06)] transition-all duration-500 relative overflow-hidden will-change-transform"
+              className="group p-6 sm:p-8 md:p-10 bg-[#FAF6F0]/30 border border-[#0A1E3D]/5 rounded-sm hover:border-[#C5A059]/30 hover:bg-white hover:shadow-[0_20px_60px_rgba(10,30,61,0.06)] transition-all duration-500 relative overflow-hidden will-change-transform"
             >
               {/* Corner Accent */}
               <div className={`absolute top-0 right-0 w-12 h-12 ${reason.color} opacity-0 group-hover:opacity-10 transition-opacity -mr-6 -mt-6 rounded-full blur-xl`} />
               
-              <div className={`w-12 h-12 md:w-14 md:h-14 ${reason.color} text-white rounded-sm flex items-center justify-center mb-6 md:mb-8 shadow-lg group-hover:scale-110 transition-transform duration-500`}>
+              <div className={`w-12 h-12 md:w-14 md:h-14 ${reason.color} text-white rounded-sm flex items-center justify-center mb-6 md:mb-8 shadow-lg group-hover:scale-110 group-hover:rotate-6 transition-transform duration-500`}>
                 <reason.icon size={26} />
               </div>
 
