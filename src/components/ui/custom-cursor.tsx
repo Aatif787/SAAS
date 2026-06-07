@@ -45,6 +45,20 @@ export default function CustomCursor() {
     const onDown = () => setIsClicking(true);
     const onUp = () => setIsClicking(false);
 
+    const hasClass = (el: HTMLElement | null, className: string): boolean => {
+      if (!el) return false;
+      try {
+        return !!el.closest("." + CSS.escape(className));
+      } catch {
+        let current: HTMLElement | null = el;
+        while (current) {
+          if (current.classList?.contains(className)) return true;
+          current = current.parentElement;
+        }
+        return false;
+      }
+    };
+
     const onOver = (e: Event) => {
       const target = e.target as HTMLElement;
       if (!target) return;
@@ -62,9 +76,9 @@ export default function CustomCursor() {
         setIsHovering(true);
         
         // Color customization based on visual context
-        if (target.closest(".btn-premium") || target.closest(".bg-ims-red") || target.closest(".text-[#9B1B30]")) {
+        if (target.closest(".btn-premium") || target.closest(".bg-ims-red") || hasClass(target, "text-[#9B1B30]")) {
           setHoverType("red");
-        } else if (target.closest(".gold-text") || target.closest(".text-[#C5A059]") || target.closest(".gold-accent") || target.closest(".bg-[#C5A059]")) {
+        } else if (target.closest(".gold-text") || hasClass(target, "text-[#C5A059]") || target.closest(".gold-accent") || hasClass(target, "bg-[#C5A059]")) {
           setHoverType("gold");
         } else {
           setHoverType("standard");
