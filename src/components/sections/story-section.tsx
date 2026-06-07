@@ -21,9 +21,9 @@ export default function StorySection() {
             viewport={{ once: true }}
           >
             <span className="text-[10px] font-bold uppercase tracking-[0.5em] text-[#C5A059] mb-8 block">Our Story</span>
-            <h2 className="text-5xl md:text-7xl font-serif font-bold text-[#FFFDE2] leading-[1.1] mb-12">
+            <h2 className="text-5xl md:text-7xl font-serif font-bold text-[#FAF6F0] leading-[1.1] mb-12">
               Driven by <br />
-              <span className="italic font-normal text-[#00dcc4]">Relentless Trust.</span>
+              <span className="italic font-normal text-[#C5A059]">Relentless Trust.</span>
             </h2>
             <div className="space-y-8 max-w-2xl">
               <p className="text-lg md:text-xl text-white/60 leading-relaxed font-light">
@@ -40,11 +40,11 @@ export default function StorySection() {
             
             <div className="mt-16 grid grid-cols-2 gap-12 border-t border-white/5 pt-12">
               <div>
-                <span className="text-3xl font-serif text-[#FFFDE2] block mb-1">28+ Years</span>
+                <span className="text-3xl font-serif text-[#FAF6F0] block mb-1">28+ Years</span>
                 <span className="text-[10px] font-bold uppercase tracking-widest text-white/30">Of Excellence</span>
               </div>
               <div>
-                <span className="text-3xl font-serif text-[#FFFDE2] block mb-1">500+ Projects</span>
+                <span className="text-3xl font-serif text-[#FAF6F0] block mb-1">500+ Projects</span>
                 <span className="text-[10px] font-bold uppercase tracking-widest text-white/30">Delivered Worldwide</span>
               </div>
             </div>
@@ -67,7 +67,7 @@ export default function StorySection() {
               className="object-cover opacity-60 hover:scale-110 transition-transform duration-[3s]" 
             />
             <div className="absolute inset-0 bg-gradient-to-tr from-[#121214] to-transparent mix-blend-multiply" />
-            <div className="absolute inset-0 bg-[#00dcc4]/10 mix-blend-overlay" />
+            <div className="absolute inset-0 bg-[#C5A059]/10 mix-blend-overlay" />
           </motion.div>
           
           {/* Floating Label */}

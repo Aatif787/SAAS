@@ -153,7 +153,7 @@ function MarqueeContent() {
           name={tech} 
           position={[i * spacing, 0, 0]} 
           scale={0.6}
-          color={i % 2 === 0 ? "#FF3131" : "#39FF14"}
+          color={i % 2 === 0 ? "#9B1B30" : "#C5A059"}
         />
       ))}
     </group>

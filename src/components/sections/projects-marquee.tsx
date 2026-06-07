@@ -25,7 +25,7 @@ export default function ProjectsMarquee() {
     <section id="gallery" className="py-32 bg-[#121214] overflow-hidden">
       <div className="container-xl mb-16">
         <span className="text-[10px] font-bold uppercase tracking-[0.5em] text-white/20 mb-4 block">Portfolio</span>
-        <h2 className="text-4xl md:text-5xl font-serif text-[#FFFDE2]">Impact Across Industries</h2>
+        <h2 className="text-4xl md:text-5xl font-serif text-[#FAF6F0]">Impact Across Industries</h2>
       </div>
 
       <div className="space-y-6">
@@ -41,8 +41,8 @@ export default function ProjectsMarquee() {
                 <Image src={p.img} alt={p.title} fill className="object-cover transition-transform duration-700 group-hover:scale-110" />
                 <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors" />
                 <div className="absolute bottom-6 left-6">
-                  <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-[#00dcc4]">{p.cat}</span>
-                  <h3 className="text-xl font-serif text-[#FFFDE2]">{p.title}</h3>
+                  <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-[#C5A059]">{p.cat}</span>
+                  <h3 className="text-xl font-serif text-[#FAF6F0]">{p.title}</h3>
                 </div>
               </div>
             ))}
@@ -62,7 +62,7 @@ export default function ProjectsMarquee() {
                 <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors" />
                 <div className="absolute bottom-6 left-6">
                   <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-[#C5A059]">{p.cat}</span>
-                  <h3 className="text-lg font-serif text-[#FFFDE2]">{p.title}</h3>
+                  <h3 className="text-lg font-serif text-[#FAF6F0]">{p.title}</h3>
                 </div>
               </div>
             ))}

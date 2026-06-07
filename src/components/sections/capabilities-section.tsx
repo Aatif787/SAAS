@@ -23,10 +23,10 @@ export default function CapabilitiesSection() {
     <section className="py-32 px-6 md:px-16 lg:px-24 bg-[#121214]">
       <div className="container-xl">
         <div className="mb-24">
-          <span className="text-[10px] font-bold uppercase tracking-[0.5em] text-[#00dcc4] mb-4 block">Our Capabilities</span>
-          <h2 className="text-4xl md:text-6xl font-serif font-bold text-[#FFFDE2] leading-tight">
+          <span className="text-[10px] font-bold uppercase tracking-[0.5em] text-[#C5A059] mb-4 block">Our Capabilities</span>
+          <h2 className="text-4xl md:text-6xl font-serif font-bold text-[#FAF6F0] leading-tight">
             Six Verticals. <br />
-            <span className="italic font-normal text-[#00dcc4]">Infinite Possibilities.</span>
+            <span className="italic font-normal text-[#C5A059]">Infinite Possibilities.</span>
           </h2>
         </div>
 
@@ -50,11 +50,11 @@ export default function CapabilitiesSection() {
               
               <div className="absolute inset-0 p-10 flex flex-col justify-end">
                 <span className="text-[10px] font-bold tracking-[0.4em] text-white/30 mb-2 uppercase">{v.id}</span>
-                <h3 className="text-2xl font-serif font-bold text-[#FFFDE2] mb-3 group-hover:text-[#00dcc4] transition-colors">{v.title}</h3>
+                <h3 className="text-2xl font-serif font-bold text-[#FAF6F0] mb-3 group-hover:text-[#C5A059] transition-colors">{v.title}</h3>
                 <p className="text-sm text-white/50 leading-relaxed max-w-[240px] translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
                   {v.desc}
                 </p>
-                <div className="mt-6 w-0 group-hover:w-12 h-[2px] bg-[#00dcc4] transition-all duration-700" />
+                <div className="mt-6 w-0 group-hover:w-12 h-[2px] bg-[#C5A059] transition-all duration-700" />
               </div>
             </motion.div>
           ))}

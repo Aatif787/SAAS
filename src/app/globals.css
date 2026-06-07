@@ -1,6 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss";
 
 @theme {
+  --font-sans: 'Outfit', sans-serif;
+  --font-serif: 'Space Grotesk', serif;
+  --font-outfit: 'Outfit', sans-serif;
+  --font-space: 'Space Grotesk', sans-serif;
+
   --color-ims-green: #0A3D1F;
   --color-ims-green-light: #14632F;
   --color-ims-green-deep: #062914;
@@ -21,16 +27,28 @@
   --color-upvc-lime: #84CC16;
   --color-upvc-dark: #1A2E0A;
   --color-upvc-glass: rgba(101, 163, 13, 0.06);
+  /* Classical accent colors */
+  --color-ims-burgundy: #722F37;
+  --color-ims-ivory: #FFFFF0;
+  --color-ims-slate: #3B4252;
+  --color-ims-copper: #B87333;
 }
 
-* { box-sizing: border-box; }
-html, body { margin: 0; padding: 0; scroll-behavior: smooth; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  width: 100%;
+}
 body {
   background: var(--color-ims-cream);
   color: var(--color-ims-charcoal);
   font-family: var(--font-outfit), ui-sans-serif, system-ui, -apple-system, sans-serif;
   overflow-x: hidden;
   min-height: 100vh;
+  width: 100%;
+  max-width: 100vw;
+  position: relative;
 }
 
 ::selection {
@@ -40,19 +58,25 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-space), sans-serif;
-  color: var(--color-ims-green);
+  color: var(--color-ims-blue);
   font-weight: 700;
 }
 
 .section-pad { padding: 3rem 1.25rem; }
 @media (min-width: 768px) { .section-pad { padding: 5rem 2rem; } }
 
-.container-xl { max-width: 1400px; margin: 0 auto; padding: 0 1rem; }
+.container-xl {
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
 @media (min-width: 768px) { .container-xl { padding: 0 2rem; } }
+@media (min-width: 1440px) { .container-xl { padding: 0 3rem; } }
 
-/* ========== GREEN & ORANGE PREMIUM DESIGN SYSTEM ========== */
+/* ========== CLASSICAL PREMIUM DESIGN SYSTEM ========== */
 
-/* Orange Gradient Text */
+/* Gold Gradient Text */
 .gold-text {
   background: linear-gradient(135deg, #C5A059, #E5C48F, #C5A059);
   -webkit-background-clip: text;
@@ -60,7 +84,7 @@ h1, h2, h3, h4, h5, h6 {
   background-clip: text;
 }
 
-/* Green Gradient Text */
+/* Classical Green Gradient Text */
 .green-text {
   background: linear-gradient(135deg, #0A1E3D, #0A3D1F, #0A1E3D);
   -webkit-background-clip: text;
@@ -68,7 +92,7 @@ h1, h2, h3, h4, h5, h6 {
   background-clip: text;
 }
 
-/* Orange Shimmer Animation */
+/* Gold Shimmer Animation */
 @keyframes gold-shimmer {
   0% { background-position: -200% center; }
   100% { background-position: 200% center; }
@@ -106,7 +130,7 @@ h1, h2, h3, h4, h5, h6 {
   box-shadow: 0 8px 32px rgba(10, 61, 31, 0.04);
 }
 
-/* Orange Pulse Glow */
+/* Gold Pulse Glow */
 @keyframes gold-pulse {
   0%, 100% { box-shadow: 0 0 0 0 rgba(232, 118, 26, 0.3); }
   50% { box-shadow: 0 0 24px 6px rgba(232, 118, 26, 0.15); }
@@ -122,7 +146,7 @@ h1, h2, h3, h4, h5, h6 {
 .animate-float-delay { animation: float-gentle 6s ease-in-out 2s infinite; }
 .animate-float-slow { animation: float-gentle 8s ease-in-out 1s infinite; }
 
-/* Card Hover Effect */
+/* Classical Card Hover Effect */
 .card-hover {
   transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -205,4 +229,41 @@ h1, h2, h3, h4, h5, h6 {
   width: 60px;
   display: block;
   margin: 1.5rem 0;
+}
+
+/* Premium Border */
+.premium-border {
+  border: 1px solid rgba(10, 30, 61, 0.06);
+}
+
+/* ========== CLASSICAL STAGGERED CARD ANIMATION ========== */
+@keyframes card-reveal {
+  0% {
+    opacity: 0;
+    transform: translateY(40px);
+    filter: blur(8px);
+  }
+  60% {
+    filter: blur(0px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0px);
+  }
+}
+
+/* Scan animation for card hover effect */
+@keyframes scan {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+.animate-scan {
+  animation: scan 2s linear infinite;
+}
+
+/* ========== FULL-WIDTH SAFETY ========== */
+main, section, footer, header, nav {
+  max-width: 100vw;
+  overflow-x: clip;
 }

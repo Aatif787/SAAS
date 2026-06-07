@@ -21,10 +21,10 @@ export default function ContactSection() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-4xl md:text-5xl lg:text-7xl font-serif text-[#FFFDE2] leading-tight"
+              className="text-4xl md:text-5xl lg:text-7xl font-serif text-[#FAF6F0] leading-tight"
             >
               Let&apos;s Start a <br />
-              <span className="text-[#00dcc4] italic">Legacy Together.</span>
+              <span className="text-[#C5A059] italic">Legacy Together.</span>
             </motion.h2>
             <p className="mt-8 text-lg text-white/50 leading-relaxed mx-auto lg:mx-0 max-w-xl font-medium">
               Whether you&apos;re looking for advanced healthcare, infrastructure solutions, 
@@ -33,32 +33,32 @@ export default function ContactSection() {
             
             <div className="mt-10 sm:mt-16 space-y-10 flex flex-col items-center lg:items-start">
                <div className="flex items-center gap-4 sm:gap-8 group">
-                  <div className="flex h-14 w-14 items-center justify-center rounded-full border border-white/5 bg-white/5 text-[#00dcc4] group-hover:bg-[#00dcc4] group-hover:text-[#121214] transition-all">
+                  <div className="flex h-14 w-14 items-center justify-center rounded-full border border-white/5 bg-white/5 text-[#C5A059] group-hover:bg-[#C5A059] group-hover:text-[#121214] transition-all">
                      <Mail size={24} />
                   </div>
                   <div>
                      <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-white/30">Email Our Team</p>
-                     <p className="text-xl font-serif text-[#FFFDE2]">info@imsgroup.com</p>
+                     <p className="text-xl font-serif text-white">info@imsgroup.com</p>
                   </div>
                </div>
                
                <div className="flex items-center gap-4 sm:gap-8 group">
-                  <div className="flex h-14 w-14 items-center justify-center rounded-full border border-white/5 bg-white/5 text-[#00dcc4] group-hover:bg-[#00dcc4] group-hover:text-[#121214] transition-all">
+                  <div className="flex h-14 w-14 items-center justify-center rounded-full border border-white/5 bg-white/5 text-[#C5A059] group-hover:bg-[#C5A059] group-hover:text-[#121214] transition-all">
                      <Phone size={24} />
                   </div>
                   <div>
                      <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-white/30">Call Our Office</p>
-                     <p className="text-xl font-serif text-[#FFFDE2]">+91 9699858212</p>
+                     <p className="text-xl font-serif text-white">+91 9699858212</p>
                   </div>
                </div>
                
                <div className="flex items-center gap-4 sm:gap-8 group">
-                  <div className="flex h-14 w-14 items-center justify-center rounded-full border border-white/5 bg-white/5 text-[#00dcc4] group-hover:bg-[#00dcc4] group-hover:text-[#121214] transition-all">
+                  <div className="flex h-14 w-14 items-center justify-center rounded-full border border-white/5 bg-white/5 text-[#C5A059] group-hover:bg-[#C5A059] group-hover:text-[#121214] transition-all">
                      <MapPin size={24} />
                   </div>
                   <div>
                      <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-white/30">Our Location</p>
-                     <p className="text-xl font-serif text-[#FFFDE2]">Gomti Nagar, Lucknow, India</p>
+                     <p className="text-xl font-serif text-white">Gomti Nagar, Lucknow, India</p>
                   </div>
                </div>
             </div>

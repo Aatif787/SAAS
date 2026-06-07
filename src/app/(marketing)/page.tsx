@@ -14,90 +14,68 @@ import ScrollScale from "@/components/ui/scroll-scale";
 
 export default function HomePage() {
   return (
-    <main className="relative bg-ims-cream">
+    <main className="relative bg-ims-cream w-full max-w-[100vw] overflow-x-hidden">
       <ExtraordinaryHero />
       
-      <ScrollScale>
-        <Stats />
-      </ScrollScale>
+      <Stats />
  
-      <ScrollScale>
-        <VideoSection />
-      </ScrollScale>
+      <VideoSection />
  
-      <ScrollScale>
-        <ServicesGrid />
-      </ScrollScale>
+      <ServicesGrid />
  
-      <ScrollScale>
-        <AboutIMS />
-      </ScrollScale>
+      <AboutIMS />
 
-      <ScrollScale>
-        <WhyChooseIMS />
-      </ScrollScale>
+      <WhyChooseIMS />
 
-      <ScrollScale>
-        <div className="bg-[#0A1424] py-20 border-y border-white/5 relative overflow-hidden">
-          {/* Premium Glows */}
-          <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-64 h-64 bg-ims-gold/5 blur-[100px] rounded-full pointer-events-none" />
-          <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-64 h-64 bg-ims-blue/10 blur-[100px] rounded-full pointer-events-none" />
-          <div className="container-xl relative z-10">
-            <h2 className="text-white text-center mb-16 text-4xl font-serif">Deep AI Capabilities</h2>
-            <AIIntegration />
-          </div>
+      <div className="bg-[#0A1424] py-16 md:py-20 border-y border-white/5 relative overflow-hidden w-full">
+        {/* Premium Glows */}
+        <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-48 md:w-64 h-48 md:h-64 bg-[#C5A059]/5 blur-[80px] md:blur-[100px] rounded-full pointer-events-none" />
+        <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-48 md:w-64 h-48 md:h-64 bg-[#0A1E3D]/10 blur-[80px] md:blur-[100px] rounded-full pointer-events-none" />
+        <div className="container-xl relative z-10">
+          <h2 className="text-white text-center mb-12 md:mb-16 text-3xl md:text-4xl font-serif">Deep AI Capabilities</h2>
+          <AIIntegration />
         </div>
-      </ScrollScale>
+      </div>
 
-      <ScrollScale>
-        <TechStack />
-      </ScrollScale>
+      <TechStack />
 
-      <ScrollScale>
-        <SecuritySection />
-      </ScrollScale>
+      <SecuritySection />
 
-      <ScrollScale>
-        <section className="section-pad bg-white border-y border-ims-blue/5">
-          <div className="container-xl text-center">
-             <span className="text-xs font-bold uppercase tracking-[0.3em] text-ims-gold mb-4 block">Testimonials</span>
-             <h2 className="text-4xl md:text-5xl font-serif text-ims-blue mb-16">Trusted by Industry Leaders</h2>
-             <div className="grid gap-10 md:grid-cols-3">
-                {[
-                  { name: "Vikram Singh", role: "MD, Urban Developers", text: "IMS Group's commitment to quality and timelines in infrastructure is unparalleled. A truly professional experience." },
-                  { name: "Dr. Ananya Roy", role: "Director, LifeCare", text: "The trauma center setup and healthcare solutions provided by IMS are world-class. They understand the urgency of life-saving care." },
-                  { name: "Rahul Verma", role: "CEO, TechVibe", text: "Their web solutions team transformed our digital presence. The AI integration significantly improved our operations." }
-                ].map((testimonial, i) => (
-                  <div key={i} className="premium-border p-10 text-left bg-ims-cream/30 card-hover">
-                     <div className="flex gap-1 text-ims-gold mb-6">
-                        {"★★★★★".split("").map((s, j) => <span key={j}>{s}</span>)}
-                     </div>
-                     <p className="text-ims-charcoal/80 italic leading-relaxed font-medium mb-8">
-                        "{testimonial.text}"
-                     </p>
-                     <div className="flex items-center gap-4 pt-6 border-t border-ims-blue/5">
-                        <div className="h-12 w-12 rounded-full bg-ims-blue/10 flex items-center justify-center font-serif text-ims-blue font-bold">
-                           {testimonial.name[0]}
-                        </div>
-                        <div>
-                           <p className="font-bold text-ims-blue">{testimonial.name}</p>
-                           <p className="text-[10px] uppercase tracking-widest text-ims-charcoal/40">{testimonial.role}</p>
-                        </div>
-                     </div>
-                  </div>
-                ))}
-             </div>
-          </div>
-        </section>
-      </ScrollScale>
+      <section className="section-pad bg-white border-y border-[#0A1E3D]/5 w-full">
+        <div className="container-xl text-center">
+           <span className="text-xs font-bold uppercase tracking-[0.3em] text-[#C5A059] mb-4 block">Testimonials</span>
+           <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif text-[#0A1E3D] mb-12 md:mb-16">Trusted by Industry Leaders</h2>
+           <div className="grid gap-8 md:gap-10 md:grid-cols-3">
+              {[
+                { name: "Vikram Singh", role: "MD, Urban Developers", text: "IMS Group's commitment to quality and timelines in infrastructure is unparalleled. A truly professional experience." },
+                { name: "Dr. Ananya Roy", role: "Director, LifeCare", text: "The trauma center setup and healthcare solutions provided by IMS are world-class. They understand the urgency of life-saving care." },
+                { name: "Rahul Verma", role: "CEO, TechVibe", text: "Their web solutions team transformed our digital presence. The AI integration significantly improved our operations." }
+              ].map((testimonial, i) => (
+                <div key={i} className="premium-border p-8 md:p-10 text-left bg-[#FAF6F0]/30 card-hover">
+                   <div className="flex gap-1 text-[#C5A059] mb-6">
+                      {"★★★★★".split("").map((s, j) => <span key={j}>{s}</span>)}
+                   </div>
+                   <p className="text-[#3B4252]/70 italic leading-relaxed font-medium mb-8 text-sm md:text-base">
+                      &ldquo;{testimonial.text}&rdquo;
+                   </p>
+                   <div className="flex items-center gap-4 pt-6 border-t border-[#0A1E3D]/5">
+                      <div className="h-12 w-12 rounded-full bg-[#0A1E3D]/8 flex items-center justify-center font-serif text-[#0A1E3D] font-bold">
+                         {testimonial.name[0]}
+                      </div>
+                      <div>
+                         <p className="font-bold text-[#0A1E3D]">{testimonial.name}</p>
+                         <p className="text-[10px] uppercase tracking-widest text-[#3B4252]/40">{testimonial.role}</p>
+                      </div>
+                   </div>
+                </div>
+              ))}
+           </div>
+        </div>
+      </section>
 
-      <ScrollScale>
-        <FAQ />
-      </ScrollScale>
+      <FAQ />
 
-      <ScrollScale>
-        <ContactSection />
-      </ScrollScale>
+      <ContactSection />
 
       <WhatsAppFloat />
     </main>

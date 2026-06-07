@@ -13,12 +13,12 @@ const SuperHexBackground = dynamic(() => import("@/components/ui/super-hex-backg
 });
 
 const VERTICALS = [
-  { id: "01", name: "Hospital", label: "Healthcare", img: "/images/healthcare-4k.png", color: "#FF3B3B", href: "/hospital" },
+  { id: "01", name: "Hospital", label: "Healthcare", img: "/images/healthcare-4k.png", color: "#9B1B30", href: "/hospital" },
   { id: "02", name: "One Home Solution", label: "Real Estate", img: "/images/home-solution-4k.png", color: "#C5A059", href: "/ims-one-home-solution" },
-  { id: "03", name: "Infra", label: "Infrastructure", img: "/images/corporate-hub-4k.png", color: "#00dcc4", href: "/about" },
-  { id: "04", name: "Steel", label: "Manufacturing", img: "/images/steel-infra-4k.png", color: "#4A90E2", href: "/ims-steel" },
-  { id: "05", name: "UPVC", label: "Industrial", img: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&q=80&w=1200", color: "#F5A623", href: "/upvc" },
-  { id: "06", name: "Estate Empire", label: "Lifestyle", img: "/images/estate-empire-4k.png", color: "#7ED321", href: "/ims-estate-empire" },
+  { id: "03", name: "Infra", label: "Infrastructure", img: "/images/corporate-hub-4k.png", color: "#0A1E3D", href: "/about" },
+  { id: "04", name: "Steel", label: "Manufacturing", img: "/images/steel-infra-4k.png", color: "#3B4252", href: "/ims-steel" },
+  { id: "05", name: "UPVC", label: "Industrial", img: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&q=80&w=1200", color: "#B87333", href: "/upvc" },
+  { id: "06", name: "Estate Empire", label: "Lifestyle", img: "/images/estate-empire-4k.png", color: "#722F37", href: "/ims-estate-empire" },
 ];
 
 const getCharWidth = (char: string) => {
@@ -51,7 +51,7 @@ export default function ExtraordinaryHero() {
   }, []);
 
   return (
-    <section ref={containerRef} className="relative min-h-screen flex items-center justify-center overflow-hidden bg-ims-cream pt-20">
+    <section ref={containerRef} className="relative min-h-screen flex items-center justify-center overflow-hidden bg-ims-cream pt-20 w-full max-w-[100vw]">
       {/* 1. Background Layer: Preserving the 3D Hex */}
       <div className="absolute inset-0 z-0">
         <SuperHexBackground />
@@ -62,25 +62,25 @@ export default function ExtraordinaryHero() {
       {/* 2. Main Hero Content - Classical Layout */}
       <motion.div 
         style={{ scale: heroScale, opacity: heroOpacity }}
-        className="container-xl relative z-20 flex flex-col items-center text-center px-4"
+        className="container-xl relative z-20 flex flex-col items-center text-center px-4 w-full"
       >
         {/* Classical Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.5, ease: [0.19, 1, 0.22, 1] }}
-          className="mb-8 md:mb-16"
+          className="mb-8 md:mb-16 w-full"
         >
-          <span className="text-[11px] font-bold uppercase tracking-[0.6em] text-ims-gold mb-8 block">
+          <span className="text-[11px] font-bold uppercase tracking-[0.5em] md:tracking-[0.6em] text-[#C5A059] mb-8 block">
             ESTABLISHED EXCELLENCE • SINCE 1996
           </span>
           
-          <h1 className="text-[clamp(2.5rem,8vw,8rem)] md:text-[clamp(4.5rem,10vw,10rem)] font-serif leading-[0.85] text-ims-blue">
+          <h1 className="text-[clamp(2.5rem,8vw,8rem)] md:text-[clamp(4.5rem,10vw,10rem)] font-serif leading-[0.85] text-[#0A1E3D]">
             <motion.span 
               initial={{ opacity: 0, x: -30, filter: "blur(10px)" }}
               animate={{ opacity: 0.5, x: 0, filter: "blur(0px)" }}
               transition={{ delay: 0.5, duration: 2, ease: [0.19, 1, 0.22, 1] }}
-              className="block italic font-light text-[0.4em] mb-2 text-ims-gold"
+              className="block italic font-light text-[0.4em] mb-2 text-[#C5A059]"
             >
               The
             </motion.span>
@@ -118,7 +118,7 @@ export default function ExtraordinaryHero() {
                         delay: 1.1 + i * 0.1, 
                         ease: [0.19, 1, 0.22, 1] 
                       }}
-                      className="inline-block text-ims-red font-black tracking-tighter"
+                      className="inline-block text-[#9B1B30] font-black tracking-tighter"
                     >
                       {char}
                     </motion.span>
@@ -146,7 +146,7 @@ export default function ExtraordinaryHero() {
                 initial={{ scaleX: 0, opacity: 0 }}
                 animate={{ scaleX: 1, opacity: 1 }}
                 transition={{ duration: 2, delay: 1.8 }}
-                className="absolute -bottom-4 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-ims-gold/60 to-transparent"
+                className="absolute -bottom-4 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#C5A059]/60 to-transparent"
               />
             </span>
           </h1>
@@ -157,19 +157,19 @@ export default function ExtraordinaryHero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.2, duration: 2 }}
-          className="max-w-3xl mb-12 md:mb-24"
+          className="max-w-3xl mb-12 md:mb-20 w-full"
         >
-          <h2 className="text-2xl md:text-4xl font-serif text-ims-blue/70 italic leading-relaxed">
-            &ldquo;Redefining the <span className="text-ims-blue font-bold not-italic border-b border-ims-gold/30 pb-1">EXTRAORDINARY</span> through 
+          <h2 className="text-xl md:text-3xl lg:text-4xl font-serif text-[#0A1E3D]/60 italic leading-relaxed">
+            &ldquo;Redefining the <span className="text-[#0A1E3D] font-bold not-italic border-b border-[#C5A059]/30 pb-1">EXTRAORDINARY</span> through 
             a legacy of precision and global vision.&rdquo;
           </h2>
         </motion.div>
 
         {/* Verticals Showcase - Classical Slide */}
-        <div className="relative w-full max-w-6xl">
-          <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-ims-blue/10 to-transparent" />
+        <div className="relative w-full max-w-6xl mx-auto">
+          <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#0A1E3D]/10 to-transparent" />
           
-          <div className="py-20">
+          <div className="py-12 md:py-20">
             <AnimatePresence mode="wait">
               <motion.div
                 key={index}
@@ -177,11 +177,11 @@ export default function ExtraordinaryHero() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -40 }}
                 transition={{ duration: 1.2, ease: [0.19, 1, 0.22, 1] }}
-                className="grid md:grid-cols-2 gap-8 md:gap-16 items-center"
+                className="grid md:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center"
               >
                 {/* Image Side - Framing like a luxury portrait */}
-                <div className="relative aspect-[4/3] group">
-                   <div className="absolute inset-0 border border-ims-gold/20 -m-2 md:-m-4 transition-transform duration-1000 group-hover:scale-105" />
+                <div className="relative aspect-[4/3] group mx-auto w-full max-w-lg md:max-w-none">
+                   <div className="absolute inset-0 border border-[#C5A059]/20 -m-2 md:-m-4 transition-transform duration-1000 group-hover:scale-105" />
                    <div className="relative w-full h-full overflow-hidden shadow-2xl">
                       <Image 
                         src={VERTICALS[index].img} 
@@ -190,17 +190,17 @@ export default function ExtraordinaryHero() {
                         sizes="(max-width: 768px) 100vw, 50vw"
                         className="object-cover transition-transform duration-[5s] scale-110 group-hover:scale-100" 
                       />
-                      <div className="absolute inset-0 bg-ims-blue/10 mix-blend-multiply" />
+                      <div className="absolute inset-0 bg-[#0A1E3D]/10 mix-blend-multiply" />
                    </div>
                    {/* Vertical Label Tag */}
-                   <div className="absolute right-4 top-4 md:-right-6 md:top-1/2 md:-translate-y-1/2 md:rotate-90 md:origin-center bg-ims-red text-white text-[9px] font-bold uppercase tracking-[0.4em] px-4 py-1.5 md:px-6 md:py-2 shadow-xl z-10">
+                   <div className="absolute right-4 top-4 md:-right-6 md:top-1/2 md:-translate-y-1/2 md:rotate-90 md:origin-center bg-[#9B1B30] text-white text-[9px] font-bold uppercase tracking-[0.4em] px-4 py-1.5 md:px-6 md:py-2 shadow-xl z-10">
                       VERTICAL 0{VERTICALS[index].id}
                    </div>
                 </div>
 
                 {/* Text Side - Classical Typography with Realistic Liquid Effect */}
-                <div className="text-center md:text-left flex flex-col items-center md:items-start">
-                  <span className="text-[10px] font-bold uppercase tracking-[0.5em] text-ims-gold block mb-6">
+                <div className="text-center md:text-left flex flex-col items-center md:items-start w-full">
+                  <span className="text-[10px] font-bold uppercase tracking-[0.5em] text-[#C5A059] block mb-6">
                     {VERTICALS[index].label}
                   </span>
                   <div className="relative mb-8 flex flex-row flex-wrap md:flex-nowrap justify-center md:justify-start items-baseline select-none overflow-visible w-full gap-x-[0.85em] gap-y-2">
@@ -236,7 +236,7 @@ export default function ExtraordinaryHero() {
                                   y="65%" 
                                   textAnchor="middle" 
                                   fill="none" 
-                                  stroke="#C5A059" /* Matching Gold Stroke */
+                                  stroke="#C5A059"
                                   strokeWidth="1.5"
                                   className="font-serif italic font-semibold text-[0.95em]"
                                 >
@@ -295,24 +295,24 @@ export default function ExtraordinaryHero() {
                     </div>
                   </div>
 
-                  <p className="text-ims-charcoal/60 leading-relaxed font-medium text-lg max-w-md mb-10 text-center md:text-left mx-auto md:mx-0">
+                  <p className="text-[#3B4252]/60 leading-relaxed font-medium text-base md:text-lg max-w-md mb-10 text-center md:text-left mx-auto md:mx-0">
                     Our commitment to excellence in {VERTICALS[index].label.toLowerCase()} is reflected in every 
                     detail of our {VERTICALS[index].name.toLowerCase()} operations.
                   </p>
-                  <Link href={VERTICALS[index].href} className="flex items-center justify-center md:justify-start gap-4 text-ims-blue font-bold uppercase tracking-[0.3em] text-[11px] hover:text-ims-red transition-colors group w-full md:w-auto">
+                  <Link href={VERTICALS[index].href} className="flex items-center justify-center md:justify-start gap-4 text-[#0A1E3D] font-bold uppercase tracking-[0.3em] text-[11px] hover:text-[#9B1B30] transition-colors group w-full md:w-auto">
                     View Portfolio 
-                    <div className="h-px w-12 bg-ims-blue/30 group-hover:w-16 group-hover:bg-ims-red transition-all" />
+                    <div className="h-px w-12 bg-[#0A1E3D]/30 group-hover:w-16 group-hover:bg-[#9B1B30] transition-all" />
                   </Link>
                 </div>
               </motion.div>
             </AnimatePresence>
           </div>
 
-          <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-ims-blue/10 to-transparent" />
+          <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#0A1E3D]/10 to-transparent" />
         </div>
 
         {/* Progress Navigation - Elegant Dots */}
-        <div className="mt-12 flex flex-col items-center gap-4">
+        <div className="mt-8 md:mt-12 flex flex-col items-center gap-4 w-full">
           <div className="flex gap-4 md:gap-8 justify-center flex-wrap">
             {VERTICALS.map((v, i) => (
               <button 
@@ -320,23 +320,23 @@ export default function ExtraordinaryHero() {
                 onClick={() => setIndex(i)}
                 className="flex flex-col items-center group cursor-pointer py-2"
               >
-                <div className={`h-1 transition-all duration-700 ${index === i ? 'w-10 md:w-12 bg-ims-red' : 'w-3 md:w-4 bg-ims-blue/10 group-hover:bg-ims-blue/30'}`} />
-                <span className={`text-[9px] font-bold tracking-widest transition-opacity duration-500 hidden md:block mt-3 ${index === i ? 'opacity-100 text-ims-blue' : 'opacity-0'}`}>
+                <div className={`h-1 transition-all duration-700 ${index === i ? 'w-10 md:w-12 bg-[#9B1B30]' : 'w-3 md:w-4 bg-[#0A1E3D]/10 group-hover:bg-[#0A1E3D]/30'}`} />
+                <span className={`text-[9px] font-bold tracking-widest transition-opacity duration-500 hidden md:block mt-3 ${index === i ? 'opacity-100 text-[#0A1E3D]' : 'opacity-0'}`}>
                   {v.name}
                 </span>
               </button>
             ))}
           </div>
-          <span className="text-[10px] font-bold tracking-[0.4em] text-ims-blue uppercase block md:hidden">
+          <span className="text-[10px] font-bold tracking-[0.4em] text-[#0A1E3D] uppercase block md:hidden">
             {VERTICALS[index].name}
           </span>
         </div>
       </motion.div>
 
       {/* Side Brand Accents */}
-      <div className="absolute left-12 bottom-12 hidden lg:flex flex-col gap-4 z-30">
-        <div className="h-20 w-[1px] bg-ims-gold/30" />
-        <span className="text-[9px] font-bold uppercase tracking-[0.5em] text-ims-gold vertical-text">
+      <div className="absolute left-8 lg:left-12 bottom-12 hidden lg:flex flex-col gap-4 z-30">
+        <div className="h-20 w-[1px] bg-[#C5A059]/30" />
+        <span className="text-[9px] font-bold uppercase tracking-[0.5em] text-[#C5A059] vertical-text">
           ESTABLISHED 1996
         </span>
       </div>
@@ -345,10 +345,10 @@ export default function ExtraordinaryHero() {
       <motion.div 
         animate={{ y: [0, 8, 0] }}
         transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute bottom-12 right-12 z-30 hidden lg:flex flex-col items-center gap-4 opacity-40"
+        className="absolute bottom-12 right-8 lg:right-12 z-30 hidden lg:flex flex-col items-center gap-4 opacity-40"
       >
-        <span className="text-[9px] font-bold uppercase tracking-[0.3em] text-ims-blue vertical-text">Discover</span>
-        <div className="h-12 w-[1px] bg-ims-blue/20" />
+        <span className="text-[9px] font-bold uppercase tracking-[0.3em] text-[#0A1E3D] vertical-text">Discover</span>
+        <div className="h-12 w-[1px] bg-[#0A1E3D]/20" />
       </motion.div>
 
       <style jsx>{`
@@ -358,7 +358,7 @@ export default function ExtraordinaryHero() {
         }
 
         .liquid-water-wrapper {
-          font-size: clamp(2.2rem, 4vw, 3.0rem);
+          font-size: clamp(1.3rem, 3.8vw, 3.0rem);
           cursor: pointer;
         }
 
@@ -375,8 +375,8 @@ export default function ExtraordinaryHero() {
           left: -50%;
           width: 200%;
           height: 200%;
-          /* Gradient Mix: Orange to Lime to Dark Green */
-          background: linear-gradient(180deg, #FF8C00 0%, #32CD32 50%, #013220 100%);
+          /* Classical gradient: Deep burgundy to rich gold */
+          background: linear-gradient(180deg, #C5A059 0%, #9B1B30 50%, #0A1E3D 100%);
           border-radius: 40%;
           animation: water-flow 6s linear infinite;
           animation-delay: calc(var(--char-index, 0) * -0.5s);
@@ -390,7 +390,7 @@ export default function ExtraordinaryHero() {
           width: 100%;
           height: 100%;
           /* Match the bottom part of the gradient */
-          background: linear-gradient(180deg, #32CD32 0%, #013220 100%);
+          background: linear-gradient(180deg, #9B1B30 0%, #0A1E3D 100%);
           transition: top 1s cubic-bezier(0.19, 1, 0.22, 1);
         }
 
