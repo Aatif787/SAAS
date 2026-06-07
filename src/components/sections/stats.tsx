@@ -90,6 +90,62 @@ const stats = [
   }
 ];
 
+interface StatCardProps {
+  stat: typeof stats[0];
+  index: number;
+}
+
+function StatCard({ stat, index }: StatCardProps) {
+  const [coords, setCoords] = useState({ x: 0, y: 0 });
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    setCoords({
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+    });
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 15 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-20px" }}
+      transition={{ delay: index * 0.08 }}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      className="text-center group p-4 sm:p-6 hover:bg-white/5 transition-all duration-300 border border-white/10 rounded-xl bg-white/[0.03] backdrop-blur-lg hover:shadow-[0_0_30px_rgba(197,160,89,0.08)] relative overflow-hidden"
+    >
+      {/* Spotlight Radial Glow following the cursor */}
+      {isHovered && (
+        <div
+          className="absolute inset-0 pointer-events-none transition-opacity duration-300 opacity-100 z-10"
+          style={{
+            background: `radial-gradient(120px circle at ${coords.x}px ${coords.y}px, rgba(197, 160, 89, 0.1), transparent 80%)`,
+          }}
+        />
+      )}
+
+      <div className="flex flex-col items-center relative z-20">
+         <div className={`mb-3 sm:mb-4 transition-all duration-500 group-hover:scale-115 group-hover:rotate-6 ${stat.iconColor}`}>
+            {stat.icon}
+         </div>
+         <Counter 
+           value={stat.value} 
+           suffix={stat.suffix} 
+           numColor={stat.numColor} 
+           suffixColor={stat.suffixColor} 
+         />
+         <p className={`text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.15em] sm:tracking-[0.2em] transition-colors mt-1 ${stat.labelColor}`}>
+            {stat.label}
+         </p>
+      </div>
+    </motion.div>
+  );
+}
+
 export default function Stats() {
   return (
     <section className="bg-[#0A1424] py-12 sm:py-16 border-y border-white/5 relative overflow-hidden">
@@ -100,29 +156,7 @@ export default function Stats() {
       <div className="container-xl relative z-10">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           {stats.map((stat, i) => (
-            <motion.div
-              key={stat.label}
-              initial={{ opacity: 0, y: 15 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-20px" }}
-              transition={{ delay: i * 0.08 }}
-              className="text-center group p-4 sm:p-6 hover:bg-white/5 transition-all duration-300 border border-white/5 rounded-xl bg-black/40 backdrop-blur-md hover:border-white/10 hover:shadow-[0_0_25px_rgba(197,160,89,0.05)]"
-            >
-              <div className="flex flex-col items-center">
-                 <div className={`mb-3 sm:mb-4 transition-all duration-300 ${stat.iconColor}`}>
-                    {stat.icon}
-                 </div>
-                 <Counter 
-                   value={stat.value} 
-                   suffix={stat.suffix} 
-                   numColor={stat.numColor} 
-                   suffixColor={stat.suffixColor} 
-                 />
-                 <p className={`text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.15em] sm:tracking-[0.2em] transition-colors mt-1 ${stat.labelColor}`}>
-                    {stat.label}
-                 </p>
-              </div>
-            </motion.div>
+            <StatCard key={stat.label} stat={stat} index={i} />
           ))}
         </div>
       </div>

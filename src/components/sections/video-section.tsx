@@ -60,7 +60,7 @@ export default function VideoSection() {
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
-            className="relative order-1 lg:order-2 group cursor-pointer will-change-transform"
+            className="relative order-1 lg:order-2 group cursor-pointer will-change-transform w-full max-w-lg lg:max-w-none mx-auto"
           >
             <div className="aspect-video bg-white/5 rounded-sm overflow-hidden premium-border relative">
               <Image 
@@ -68,25 +68,45 @@ export default function VideoSection() {
                 alt="Corporate Video Thumbnail" 
                 fill
                 sizes="(max-width: 1024px) 100vw, 50vw"
-                className="object-cover opacity-60 group-hover:scale-110 transition-transform duration-1000"
+                className="object-cover grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-90 group-hover:scale-105 transition-all duration-[1.2s] ease-out"
               />
-               <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="h-24 w-24 rounded-full bg-ims-gold flex items-center justify-center text-white shadow-2xl group-hover:scale-110 transition-transform">
-                     <Play size={32} fill="currentColor" />
-                  </div>
-               </div>
+              
+              {/* Glare Sweep Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/25 to-transparent -translate-x-full group-hover:animate-glare-sweep pointer-events-none z-10" />
+
+              <div className="absolute inset-0 flex items-center justify-center">
+                 <div className="relative flex items-center justify-center">
+                    {/* Pulsing Gold Ring */}
+                    <span className="absolute h-32 w-32 animate-ping rounded-full bg-ims-gold/25 opacity-75 pointer-events-none" />
+                    
+                    <div className="h-20 w-20 md:h-24 md:w-24 rounded-full bg-ims-gold flex items-center justify-center text-white shadow-2xl group-hover:scale-110 group-hover:bg-ims-red transition-all duration-500 relative z-10">
+                       <Play size={28} className="md:size-8" fill="currentColor" />
+                    </div>
+                 </div>
+              </div>
                
-               {/* Scanning Effect */}
-               <motion.div 
-                 animate={{ y: ["0%", "100%", "0%"] }}
-                 transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-                 className="absolute top-0 left-0 w-full h-px bg-ims-gold/50 shadow-[0_0_15px_rgba(197,160,89,0.5)] z-20"
-               />
-             </div>
+              {/* Scanning Line */}
+              <motion.div 
+                animate={{ y: ["0%", "100%", "0%"] }}
+                transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
+                className="absolute top-0 left-0 w-full h-[2px] bg-ims-gold/40 shadow-[0_0_12px_rgba(197,160,89,0.4)] z-20"
+              />
+            </div>
              
-             {/* Decorative Dots */}
-             <div className="absolute -top-4 -right-4 h-24 w-24 bg-[radial-gradient(var(--color-ims-gold)_1px,transparent_1px)] bg-[size:10px_10px] opacity-30" />
+            {/* Decorative Dots */}
+            <div className="absolute -top-4 -right-4 h-24 w-24 bg-[radial-gradient(var(--color-ims-gold)_1px,transparent_1px)] bg-[size:10px_10px] opacity-30 pointer-events-none" />
           </motion.div>
+
+          {/* Glare Sweep Custom Keyframe */}
+          <style jsx>{`
+            .animate-glare-sweep {
+              animation: glare-sweep 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+            }
+            @keyframes glare-sweep {
+              0% { transform: translate3d(-100%, 0, 0) skewX(-20deg); }
+              100% { transform: translate3d(100%, 0, 0) skewX(-20deg); }
+            }
+          `}</style>
 
         </div>
       </div>

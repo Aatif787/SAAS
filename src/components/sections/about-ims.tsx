@@ -1,10 +1,22 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { CheckCircle2, ShieldCheck, Users, Heart } from "lucide-react";
 import Image from "next/image";
 
 export default function AboutIMS() {
+  const [coords, setCoords] = useState({ x: 0, y: 0 });
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    setCoords({
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+    });
+  };
+
   return (
     <section id="about" className="section-pad bg-white w-full">
       <div className="container-xl">
@@ -13,8 +25,21 @@ export default function AboutIMS() {
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="relative"
+            onMouseMove={handleMouseMove}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+            className="relative cursor-pointer"
           >
+            {/* Floating ESTD Badge */}
+            <motion.div
+              animate={{ y: [0, -8, 0] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute -top-5 -left-5 bg-white border border-[#C5A059] p-4 text-[#0A1E3D] shadow-2xl z-30 flex flex-col items-center justify-center rounded-sm min-w-[90px] border-b-4 pointer-events-none"
+            >
+              <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-[#C5A059]">ESTD</span>
+              <span className="text-xl font-serif font-bold tracking-tight">1996</span>
+            </motion.div>
+
             <div className="aspect-[4/3] rounded-sm overflow-hidden premium-border shadow-2xl relative">
               <Image 
                 src="/images/corporate-hub.png" 
@@ -23,6 +48,16 @@ export default function AboutIMS() {
                 sizes="(max-width: 1024px) 100vw, 50vw"
                 className="object-cover hover:scale-105 transition-transform duration-1000"
               />
+              
+              {/* Image Spotlight Glow */}
+              {isHovered && (
+                <div
+                  className="absolute inset-0 pointer-events-none transition-opacity duration-300 opacity-100 z-20"
+                  style={{
+                    background: `radial-gradient(150px circle at ${coords.x}px ${coords.y}px, rgba(197, 160, 89, 0.12), transparent 80%)`,
+                  }}
+                />
+              )}
             </div>
             <div className="absolute -bottom-8 -right-8 lg:-bottom-10 lg:-right-10 bg-[#9B1B30] p-8 lg:p-10 text-white shadow-2xl hidden xl:block">
               <h3 className="text-4xl lg:text-5xl font-serif mb-2 tracking-tighter">IMS</h3>
@@ -72,9 +107,9 @@ export default function AboutIMS() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.1 }}
-                  className="flex gap-4"
+                  className="flex gap-4 group cursor-default p-2 rounded-md hover:bg-[#FAF6F0]/40 transition-all duration-300 hover:scale-[1.02]"
                 >
-                  <div className="mt-1 flex-shrink-0">{item.icon}</div>
+                  <div className="mt-1 flex-shrink-0 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">{item.icon}</div>
                   <div>
                     <h4 className="font-bold text-[#0A1E3D] uppercase tracking-wider text-sm mb-2">{item.title}</h4>
                     <p className="text-xs text-[#3B4252]/55 leading-relaxed">{item.desc}</p>
